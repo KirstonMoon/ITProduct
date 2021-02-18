@@ -66,10 +66,10 @@
 		20B3731925DE9B1E00CC6336 /* ITProduct */ = {
 			isa = PBXGroup;
 			children = (
+				20B3732F25DE9BE300CC6336 /* Application */,
 				20E83A8D25DECB85001290E3 /* Helpers */,
 				20ED0AC725DEB5E9007C3BA8 /* Extensions */,
 				20ED0AB925DEA7C2007C3BA8 /* Models */,
-				20B3732F25DE9BE300CC6336 /* Application */,
 				20B3733125DE9BEE00CC6336 /* MainModule */,
 			);
 			path = ITProduct;

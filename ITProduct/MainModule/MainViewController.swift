@@ -50,14 +50,20 @@ class MainViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        setupDelegatesAndDataSource()
+        loadFirstNumbers()
+    }
+    
+    private func setupDelegatesAndDataSource() {
         mainView.picker.delegate = self
         mainView.picker.dataSource = self
         mainView.picker.myDelegate = self
-        viewModel?.showSimpleNumbers(startNumber: 2)
-        viewModel?.showFibsNumbers(number: 1000)
     }
     
-    
+    private func loadFirstNumbers() {
+        viewModel?.showSimpleNumbers(startNumber: 2)
+        viewModel?.showFibsNumbers(number: 100)
+    }
 }
 
 extension MainViewController: UIPickerViewDelegate, UIPickerViewDataSource {
@@ -66,18 +72,22 @@ extension MainViewController: UIPickerViewDelegate, UIPickerViewDataSource {
     }
     
     func pickerView(_ pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int {
-        if component == 0 {
+        
+        switch component {
+        
+        case 0:
             return simpleNumbers.count
-        } else if component == 1 {
+        case 1:
             return fibsNumbers.count
-        } else {
+        default:
             fatalError("Сбой при генерации чисел")
         }
     }
     
     func pickerView(_ pickerView: UIPickerView, viewForRow row: Int, forComponent component: Int, reusing view: UIView?) -> UIView {
         
-        if component == 0 {
+        switch component {
+        case 0:
             let label = UILabel()
             label.text = simpleNumbers[row].description
             label.textAlignment = .center
@@ -87,11 +97,11 @@ extension MainViewController: UIPickerViewDelegate, UIPickerViewDataSource {
             } else if row % 2 == 0 {
                 label.backgroundColor = .systemBackground
             }
-            
             return label
-        } else if component == 1 {
+            
+        case 1:
             let label = UILabel()
-            label.text = fibsNumbers[row].description
+            label.text = String(format: "%.f", fibsNumbers[row]).description
             label.textAlignment = .center
             
             if row % 2 == 1 {
@@ -100,8 +110,9 @@ extension MainViewController: UIPickerViewDelegate, UIPickerViewDataSource {
                 label.backgroundColor = .systemGray4
             }
             return label
+        default:
+            fatalError("Сбой при отображение ячеек")
         }
-        return UILabel()
     }
     
     func pickerView(_ pickerView: UIPickerView, widthForComponent component: Int) -> CGFloat {
@@ -117,7 +128,7 @@ extension MainViewController: CustomPickerViewDelegate {
     
     func didTapped(_ picker: CustomPickerView) {
         
-        DispatchQueue.global(qos: .userInitiated).async {
+        DispatchQueue.global(qos: .userInitiated).async(flags: .barrier) {
             guard let simpleNumber = self.simpleNumbers.last,
                   let fibsNumber = self.fibsNumbers.last else { fatalError("Сбой при генерации чисел")}
             self.viewModel?.showSimpleNumbers(startNumber: simpleNumber)

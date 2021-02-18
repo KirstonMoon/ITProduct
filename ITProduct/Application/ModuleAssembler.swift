@@ -12,7 +12,7 @@ protocol Assembler {
     static func createMain() -> UIViewController
 }
 
-class ModuleAssembler: Assembler {
+final class ModuleAssembler: Assembler {
     
     static func createMain() -> UIViewController {
         

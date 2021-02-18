@@ -7,7 +7,7 @@
 
 import Foundation
 
-class Generator {
+final class Generator {
     
     func generateSimpleNumbers(startNumber: Int) -> [Int] {
         

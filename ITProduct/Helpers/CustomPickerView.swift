@@ -11,7 +11,7 @@ protocol CustomPickerViewDelegate: AnyObject {
     func didTapped(_ picker: CustomPickerView)
 }
 
-class CustomPickerView: UIPickerView {
+final class CustomPickerView: UIPickerView {
 
     weak var myDelegate: CustomPickerViewDelegate?
 
