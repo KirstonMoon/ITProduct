@@ -7,6 +7,7 @@
 
 import UIKit
 
+
 class MainView: UIView {
     
     override init(frame: CGRect) {
@@ -47,9 +48,10 @@ class MainView: UIView {
         return label
     }()
     
-    let picker: UIPickerView = {
-        let picker = UIPickerView()
+    let picker: CustomPickerView = {
+        let picker = CustomPickerView()
         picker.translatesAutoresizingMaskIntoConstraints = false
+        picker.backgroundColor = .systemGray4
         return picker
     }()
     
@@ -83,7 +85,7 @@ class MainView: UIView {
             picker.topAnchor.constraint(equalTo: simpleNumbersLabel.bottomAnchor, constant: 20),
             picker.leadingAnchor.constraint(equalTo: safeAreaLayoutGuide.leadingAnchor),
             picker.trailingAnchor.constraint(equalTo: safeAreaLayoutGuide.trailingAnchor),
-            picker.heightAnchor.constraint(equalToConstant: 800)
+            picker.heightAnchor.constraint(equalToConstant: 600)
         ])
     }
     

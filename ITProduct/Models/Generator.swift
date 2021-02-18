@@ -11,14 +11,14 @@ class Generator {
     
     func generateSimpleNumbers(startNumber: Int) -> [Int] {
         
-        var startInt = startNumber
-        var data = (startInt...startInt+500).map{$0}
-        
-        while (startInt.powerOf2() <= startInt+1000) {
-            data.removeAll(where: {$0 >= startInt.powerOf2() && $0.isMultiple(of: startInt)})
-            startInt = data.first(where: {$0 > startInt})!
+        let max = startNumber + 300
+        var testValue = 2
+        var data = (2...max).map{$0}
+
+        while (testValue.powerOf2() <= max) {
+            data.removeAll(where: {$0 >= testValue.powerOf2() && $0.isMultiple(of: testValue)})
+            testValue = data.first(where: {$0 > testValue})!
         }
-        
         
         return data
     }

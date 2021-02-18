@@ -18,13 +18,19 @@ class MainViewController: UIViewController {
         return view
     }
     
-    private var numbers = [Int]()
+    private var numbers = [Int]() {
+        didSet {
+            DispatchQueue.main.async {
+                self.mainView.picker.reloadAllComponents()
+            }
+        }
+    }
     
     var viewModel: MainViewModelProtocol? {
         didSet {
             self.viewModel?.numbersDidChange = { [weak self] viewModel in
                 guard let numbers = viewModel.numbers else { return }
-                self?.numbers.append(contentsOf: numbers)
+                self?.numbers = numbers
             }
         }
     }
@@ -34,7 +40,7 @@ class MainViewController: UIViewController {
         super.viewDidLoad()
         mainView.picker.delegate = self
         mainView.picker.dataSource = self
-        
+        mainView.picker.myDelegate = self
         viewModel?.showNumbers(startNumber: 2)
     }
 
@@ -53,11 +59,15 @@ extension MainViewController: UIPickerViewDelegate, UIPickerViewDataSource {
     func pickerView(_ pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? {
         numbers[row].description
     }
+}
+
+extension MainViewController: CustomPickerViewDelegate {
     
-    func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
-        if row == numbers.count-1 {
-            viewModel?.showNumbers(startNumber: numbers.last!)
-            mainView.picker.reloadAllComponents()
+    func didTapped(_ picker: CustomPickerView) {
+        
+        DispatchQueue.global(qos: .userInitiated).async {
+            guard let number = self.numbers.last else { fatalError("Сбой при генерации простых чисел")}
+            self.viewModel?.showNumbers(startNumber: number)
         }
     }
 }
