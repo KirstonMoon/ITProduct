@@ -23,16 +23,18 @@ final class Generator {
         return data
     }
     
-    func generateFibsNumbers(number: Double) -> [Double] {
+    func generateFibsNumbers(toNumber: Double) -> [Double] {
+        
         var arrayOfNumbers = [Double]()
-        getFibsNumbers(through: number * number).forEach{arrayOfNumbers.append($0)}
+        getFibsNumbers(toNumber: toNumber * toNumber / 2).forEach{arrayOfNumbers.append($0)}
         return arrayOfNumbers
     }
     
-    func getFibsNumbers(through: Double) -> UnfoldSequence<Double, (Double, Double)> {
+    func getFibsNumbers(toNumber: Double) -> UnfoldSequence<Double, (Double, Double)> {
+        
         return sequence(state: (0, 1),
                         next: { (pair: inout (Double, Double)) -> Double? in
-                            guard pair.1 <= through else { return nil }
+                            guard pair.1 <= toNumber else { return nil }
                             defer { pair = (pair.1, pair.0 + pair.1) }
                             return pair.1
                         })
