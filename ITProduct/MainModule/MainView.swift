@@ -51,7 +51,6 @@ class MainView: UIView {
     let picker: CustomPickerView = {
         let picker = CustomPickerView()
         picker.translatesAutoresizingMaskIntoConstraints = false
-        picker.backgroundColor = .systemGray4
         return picker
     }()
     

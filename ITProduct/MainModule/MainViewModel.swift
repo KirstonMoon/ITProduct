@@ -9,30 +9,45 @@ import UIKit
 
 protocol MainViewModelProtocol: AnyObject {
     
-    var numbers: [Int]? { get }
-    var numbersDidChange: ((MainViewModelProtocol) -> Void)? { get set }
+    var simpleNumbers: [Int]? { get }
+    var fibsNumbers: [Double]? { get }
+    var getSimpleNumbers: ((MainViewModelProtocol) -> Void)? { get set }
+    var getFibsNumbers: ((MainViewModelProtocol) -> Void)? { get set }
+    
+    func showSimpleNumbers(startNumber: Int)
+    func showFibsNumbers(number: Double)
     
     init(generator: Generator)
-    func showNumbers(startNumber: Int)
 }
 
 class MainViewModel: MainViewModelProtocol {
     
     let generator: Generator
     
-    var numbers: [Int]? {
+    var simpleNumbers: [Int]? {
         didSet {
-            self.numbersDidChange?(self)
+            self.getSimpleNumbers?(self)
         }
     }
     
-    var numbersDidChange: ((MainViewModelProtocol) -> Void)?
+    var fibsNumbers: [Double]? {
+        didSet {
+            self.getFibsNumbers?(self)
+        }
+    }
+    
+    var getSimpleNumbers: ((MainViewModelProtocol) -> Void)?
+    var getFibsNumbers: ((MainViewModelProtocol) -> Void)?
     
     required init(generator: Generator) {
         self.generator = generator
     }
     
-    func showNumbers(startNumber: Int) {
-        self.numbers = self.generator.generateSimpleNumbers(startNumber: startNumber)
+    func showSimpleNumbers(startNumber: Int) {
+        self.simpleNumbers = self.generator.generateSimpleNumbers(startNumber: startNumber)
+    }
+    
+    func showFibsNumbers(number: Double) {
+        self.fibsNumbers = self.generator.generateFibsNumbers(number: number)
     }
 }
