@@ -8,23 +8,33 @@
 import UIKit
 
 class MainViewController: UIViewController {
-
+    
     @IBOutlet weak var generatorLabel: UILabel!
     @IBOutlet weak var numbersPicker: UIPickerView!
     
-    private var numbers = [Int]()
+    private var numbers = [Int]() {
+        didSet {
+            print(numbers)
+        }
+    }
     
+    
+    var viewModel: MainViewModelProtocol? {
+        didSet {
+            self.viewModel?.numbersDidChange = { [weak self] viewModel in
+                guard let numbers = viewModel.numbers else { return }
+                self?.numbers = numbers
+            }
+        }
+    }
+
     
     override func viewDidLoad() {
         super.viewDidLoad()
         numbersPicker.delegate = self
         numbersPicker.dataSource = self
         
-        numbers.append(3)
-        numbers.append(5)
-        numbers.append(30)
-        numbers.append(341)
-        numbers.append(3427)
+        viewModel?.showNumbers(startNumber: 2)
     }
 
 
@@ -32,7 +42,7 @@ class MainViewController: UIViewController {
 
 extension MainViewController: UIPickerViewDelegate, UIPickerViewDataSource {
     func numberOfComponents(in pickerView: UIPickerView) -> Int {
-        2
+        1
     }
     
     func pickerView(_ pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int {
