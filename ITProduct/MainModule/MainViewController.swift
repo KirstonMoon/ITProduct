@@ -93,7 +93,7 @@ extension MainViewController: UIPickerViewDelegate, UIPickerViewDataSource {
             label.textAlignment = .center
             
             if row % 2 == 1 {
-                label.backgroundColor = .gray
+                label.backgroundColor = .systemGray4
             } else if row % 2 == 0 {
                 label.backgroundColor = .systemBackground
             }
