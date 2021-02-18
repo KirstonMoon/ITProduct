@@ -9,21 +9,22 @@ import UIKit
 
 class MainViewController: UIViewController {
     
-    @IBOutlet weak var generatorLabel: UILabel!
-    @IBOutlet weak var numbersPicker: UIPickerView!
-    
-    private var numbers = [Int]() {
-        didSet {
-            print(numbers)
-        }
+    override func loadView() {
+        view = MainView()
     }
     
+    private var mainView: MainView {
+        guard let view = view as? MainView else { fatalError("Не удалось отобразить View")}
+        return view
+    }
+    
+    private var numbers = [Int]()
     
     var viewModel: MainViewModelProtocol? {
         didSet {
             self.viewModel?.numbersDidChange = { [weak self] viewModel in
                 guard let numbers = viewModel.numbers else { return }
-                self?.numbers = numbers
+                self?.numbers.append(contentsOf: numbers)
             }
         }
     }
@@ -31,8 +32,8 @@ class MainViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        numbersPicker.delegate = self
-        numbersPicker.dataSource = self
+        mainView.picker.delegate = self
+        mainView.picker.dataSource = self
         
         viewModel?.showNumbers(startNumber: 2)
     }
@@ -51,5 +52,12 @@ extension MainViewController: UIPickerViewDelegate, UIPickerViewDataSource {
     
     func pickerView(_ pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? {
         numbers[row].description
+    }
+    
+    func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
+        if row == numbers.count-1 {
+            viewModel?.showNumbers(startNumber: numbers.last!)
+            mainView.picker.reloadAllComponents()
+        }
     }
 }
