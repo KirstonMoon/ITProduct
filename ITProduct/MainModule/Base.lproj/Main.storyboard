@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="17701" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="BYZ-38-t0r">
+    <device id="retina6_1" orientation="portrait" appearance="light"/>
+    <dependencies>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="17703"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="System colors in document resources" minToolsVersion="11.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <scenes>
+        <!--Main View Controller-->
+        <scene sceneID="tne-QT-ifu">
+            <objects>
+                <viewController id="BYZ-38-t0r" customClass="MainViewController" customModule="ITProduct" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="8bC-Xf-vdC">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Генератор" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="WdW-5S-Glg">
+                                <rect key="frame" x="130.5" y="44" width="153.5" height="36"/>
+                                <fontDescription key="fontDescription" type="boldSystem" pointSize="30"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <pickerView contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="aBd-YI-sxn">
+                                <rect key="frame" x="0.0" y="132" width="414" height="764"/>
+                            </pickerView>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Фибоначчи" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ndk-oQ-V0f">
+                                <rect key="frame" x="239" y="88" width="155" height="36"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="30"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Простые " textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="IoG-26-aQB">
+                                <rect key="frame" x="20" y="88" width="127" height="36"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="30"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                        </subviews>
+                        <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                        <constraints>
+                            <constraint firstItem="aBd-YI-sxn" firstAttribute="trailing" secondItem="6Tk-OE-BBY" secondAttribute="trailing" id="3f0-lx-3jH"/>
+                            <constraint firstItem="WdW-5S-Glg" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" id="7t6-Rz-Vgb"/>
+                            <constraint firstItem="ndk-oQ-V0f" firstAttribute="top" secondItem="WdW-5S-Glg" secondAttribute="bottom" constant="8" symbolic="YES" id="DFX-Nq-dGT"/>
+                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="ndk-oQ-V0f" secondAttribute="trailing" constant="20" id="ML2-ep-Oh4"/>
+                            <constraint firstItem="ndk-oQ-V0f" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="IoG-26-aQB" secondAttribute="trailing" constant="92" id="QeJ-XO-iAt"/>
+                            <constraint firstItem="aBd-YI-sxn" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" id="R7x-xh-ej8"/>
+                            <constraint firstAttribute="bottom" secondItem="aBd-YI-sxn" secondAttribute="bottom" id="WTe-mq-yzh"/>
+                            <constraint firstItem="IoG-26-aQB" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="20" id="Yc0-DV-gmN"/>
+                            <constraint firstItem="IoG-26-aQB" firstAttribute="top" secondItem="WdW-5S-Glg" secondAttribute="bottom" constant="8" symbolic="YES" id="htC-uT-IN7"/>
+                            <constraint firstItem="WdW-5S-Glg" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="pgS-1n-mNK"/>
+                            <constraint firstItem="aBd-YI-sxn" firstAttribute="top" secondItem="IoG-26-aQB" secondAttribute="bottom" constant="8" symbolic="YES" id="phR-Z1-g42"/>
+                        </constraints>
+                    </view>
+                    <connections>
+                        <outlet property="generatorLabel" destination="WdW-5S-Glg" id="qIY-is-gmn"/>
+                        <outlet property="numbersPicker" destination="aBd-YI-sxn" id="hof-e6-F75"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="13.043478260869566" y="103.79464285714285"/>
+        </scene>
+    </scenes>
+    <resources>
+        <systemColor name="systemBackgroundColor">
+            <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+        </systemColor>
+    </resources>
+</document>
