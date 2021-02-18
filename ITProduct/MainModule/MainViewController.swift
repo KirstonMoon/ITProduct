@@ -37,10 +37,12 @@ class MainViewController: UIViewController {
     var viewModel: MainViewModelProtocol? {
         didSet {
             self.viewModel?.getSimpleNumbers = { [weak self] viewModel in
-                self?.simpleNumbers = viewModel.simpleNumbers!
+                guard let numbers = viewModel.simpleNumbers else { fatalError("Сбой при генерации простых чисел")}
+                self?.simpleNumbers = numbers
             }
             self.viewModel?.getFibsNumbers = { [weak self] viewModel in
-                self?.fibsNumbers = viewModel.fibsNumbers!
+                guard let numbers = viewModel.fibsNumbers else { fatalError("Сбой при генерации чисел Фибоначчи")}
+                self?.fibsNumbers = numbers
             }
         }
     }
@@ -78,7 +80,6 @@ extension MainViewController: UIPickerViewDelegate, UIPickerViewDataSource {
         if component == 0 {
             let label = UILabel()
             label.text = simpleNumbers[row].description
-            label.font = .systemFont(ofSize: 22)
             label.textAlignment = .center
             
             if row % 2 == 1 {
@@ -91,17 +92,24 @@ extension MainViewController: UIPickerViewDelegate, UIPickerViewDataSource {
         } else if component == 1 {
             let label = UILabel()
             label.text = fibsNumbers[row].description
-            label.font = .systemFont(ofSize: 22)
             label.textAlignment = .center
             
             if row % 2 == 1 {
                 label.backgroundColor = .systemBackground
             } else if row % 2 == 0 {
-                label.backgroundColor = .gray
+                label.backgroundColor = .systemGray4
             }
             return label
         }
         return UILabel()
+    }
+    
+    func pickerView(_ pickerView: UIPickerView, widthForComponent component: Int) -> CGFloat {
+        120
+    }
+    
+    func pickerView(_ pickerView: UIPickerView, rowHeightForComponent component: Int) -> CGFloat {
+        70
     }
 }
 
@@ -111,7 +119,7 @@ extension MainViewController: CustomPickerViewDelegate {
         
         DispatchQueue.global(qos: .userInitiated).async {
             guard let simpleNumber = self.simpleNumbers.last,
-                  let fibsNumber = self.fibsNumbers.last else { fatalError("Сбой при генерации")}
+                  let fibsNumber = self.fibsNumbers.last else { fatalError("Сбой при генерации чисел")}
             self.viewModel?.showSimpleNumbers(startNumber: simpleNumber)
             self.viewModel?.showFibsNumbers(number: fibsNumber)
         }
