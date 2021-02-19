@@ -114,7 +114,7 @@ extension MainViewController: UIPickerViewDelegate, UIPickerViewDataSource {
 
             return label
         default:
-            fatalError("Сбой при отображение ячеек")
+            fatalError("Сбой при отображении ячеек")
         }
     }
     
