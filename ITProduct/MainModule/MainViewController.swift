@@ -47,7 +47,6 @@ class MainViewController: UIViewController {
         }
     }
     
-    
     override func viewDidLoad() {
         super.viewDidLoad()
         setupDelegatesAndDataSource()
@@ -92,11 +91,13 @@ extension MainViewController: UIPickerViewDelegate, UIPickerViewDataSource {
             label.text = simpleNumbers[row].description
             label.textAlignment = .center
             
-            if row % 2 == 1 {
-                label.backgroundColor = .systemGray4
-            } else if row % 2 == 0 {
+            switch row % 2 {
+            case 0:
                 label.backgroundColor = .systemBackground
+            default:
+                label.backgroundColor = .systemGray4
             }
+            
             return label
             
         case 1:
@@ -104,11 +105,13 @@ extension MainViewController: UIPickerViewDelegate, UIPickerViewDataSource {
             label.text = String(format: "%.0f", fibsNumbers[row]).description
             label.textAlignment = .center
             
-            if row % 2 == 1 {
-                label.backgroundColor = .systemBackground
-            } else if row % 2 == 0 {
+            switch row % 2 {
+            case 0:
                 label.backgroundColor = .systemGray4
+            default:
+                label.backgroundColor = .systemBackground
             }
+
             return label
         default:
             fatalError("Сбой при отображение ячеек")
