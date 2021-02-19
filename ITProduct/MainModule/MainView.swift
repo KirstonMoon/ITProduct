@@ -15,7 +15,7 @@ class MainView: UIView {
         setupAppearance()
     }
     
-    var collectionView: CustomCollectionView!
+    var collectionView: UICollectionView!
     
     private func setupAppearance() {
         backgroundColor = .systemBackground
@@ -55,7 +55,7 @@ class MainView: UIView {
         layout.itemSize.height = 100
         layout.itemSize.width = UIScreen.main.bounds.width / 2 - UIScreen.main.bounds.width * 0.1
         
-        collectionView = CustomCollectionView(frame: frame, collectionViewLayout: layout)
+        collectionView = UICollectionView(frame: frame, collectionViewLayout: layout)
         collectionView.register(CustomCollectionViewCell.self, forCellWithReuseIdentifier: CustomCollectionViewCell.cellId)
         collectionView.showsVerticalScrollIndicator = false
         collectionView.backgroundColor = .systemBackground

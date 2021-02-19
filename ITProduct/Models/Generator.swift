@@ -11,14 +11,15 @@ final class Generator {
     
     func generateSimpleNumbers(startNumber: Int) -> [Int] {
         
-        let max = startNumber + 1000
+        let max = startNumber
         var testValue = 2
-        var data = (2...max).map{$0}
+        var data = (2...max * 2).map{$0}
         
-        while (testValue.square() <= max) {
-            data.removeAll(where: {$0 >= testValue.square() && $0.isMultiple(of: testValue)})
+        while (testValue * testValue <= max) {
+            data.removeAll(where: {$0 >= testValue * testValue && $0.isMultiple(of: testValue)})
             testValue = data.first(where: {$0 > testValue})!
         }
+        
         return data
     }
     
@@ -32,4 +33,3 @@ final class Generator {
         return array
     }
 }
-
