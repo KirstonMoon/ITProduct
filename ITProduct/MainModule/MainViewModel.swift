@@ -45,7 +45,7 @@ class MainViewModel: MainViewModelProtocol {
     }
     
     func showFibsNumbers(number: Double) {
-        self.fibsNumbers = self.generator.generateFibsNumbers(toNumber: number)
+        self.fibsNumbers = self.generator.generateFibsNumbers(number: Int(number))
     }
     
     required init(generator: Generator) {
