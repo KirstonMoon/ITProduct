@@ -47,7 +47,6 @@ class MainViewController: UIViewController {
         }
     }
     
-    
     override func viewDidLoad() {
         super.viewDidLoad()
         setupDelegatesAndDataSource()
@@ -92,23 +91,27 @@ extension MainViewController: UIPickerViewDelegate, UIPickerViewDataSource {
             label.text = simpleNumbers[row].description
             label.textAlignment = .center
             
-            if row % 2 == 1 {
-                label.backgroundColor = .systemGray4
-            } else if row % 2 == 0 {
+            switch row % 2 {
+            case 0:
                 label.backgroundColor = .systemBackground
+            default:
+                label.backgroundColor = .systemGray4
             }
+            
             return label
             
         case 1:
             let label = UILabel()
-            label.text = String(format: "%.f", fibsNumbers[row]).description
+            label.text = String(format: "%.0f", fibsNumbers[row]).description
             label.textAlignment = .center
             
-            if row % 2 == 1 {
-                label.backgroundColor = .systemBackground
-            } else if row % 2 == 0 {
+            switch row % 2 {
+            case 0:
                 label.backgroundColor = .systemGray4
+            default:
+                label.backgroundColor = .systemBackground
             }
+
             return label
         default:
             fatalError("Сбой при отображение ячеек")
@@ -129,10 +132,10 @@ extension MainViewController: CustomPickerViewDelegate {
     func didTapped(_ picker: CustomPickerView) {
         
         DispatchQueue.global(qos: .userInitiated).async(flags: .barrier) {
-            guard let simpleNumber = self.simpleNumbers.last,
-                  let fibsNumber = self.fibsNumbers.last else { fatalError("Сбой при генерации чисел")}
+            guard let simpleNumber = self.simpleNumbers.last else { fatalError("Сбой при генерации простых чисел")}
+            
             self.viewModel?.showSimpleNumbers(startNumber: simpleNumber)
-            self.viewModel?.showFibsNumbers(number: fibsNumber)
+            self.viewModel?.showFibsNumbers(number: Double(self.fibsNumbers.count))
         }
     }
 }
