@@ -52,7 +52,8 @@ class MainView: UIView {
     
     private func setupCollectionView() {
         let layout = UICollectionViewFlowLayout()
-        layout.itemSize = CGSize(width: 150, height: 100)
+        layout.itemSize.height = 100
+        layout.itemSize.width = UIScreen.main.bounds.width / 2 - UIScreen.main.bounds.width * 0.1
         
         collectionView = CustomCollectionView(frame: frame, collectionViewLayout: layout)
         collectionView.register(CustomCollectionViewCell.self, forCellWithReuseIdentifier: CustomCollectionViewCell.cellId)
