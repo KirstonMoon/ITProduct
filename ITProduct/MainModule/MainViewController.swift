@@ -22,7 +22,6 @@ class MainViewController: UIViewController {
         didSet {
             DispatchQueue.main.async {
                 self.mainView.collectionView.reloadData()
-                print("получены")
             }
         }
     }
