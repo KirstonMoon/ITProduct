@@ -7,7 +7,7 @@
 
 import UIKit
 
-class MainViewController: UIViewController {
+class MainViewController: UIViewController, UICollectionViewDelegate, UICollectionViewDataSource {
     
     override func loadView() {
         view = MainView()
@@ -21,7 +21,7 @@ class MainViewController: UIViewController {
     private var simpleNumbers = [Int]() {
         didSet {
             DispatchQueue.main.async {
-                self.mainView.picker.reloadAllComponents()
+                self.mainView.collectionView.reloadData()
             }
         }
     }
@@ -29,7 +29,7 @@ class MainViewController: UIViewController {
     private var fibsNumbers = [Double]() {
         didSet {
             DispatchQueue.main.async {
-                self.mainView.picker.reloadAllComponents()
+                self.mainView.collectionView.reloadData()
             }
         }
     }
@@ -54,74 +54,21 @@ class MainViewController: UIViewController {
     }
     
     private func setupDelegatesAndDataSource() {
-        mainView.picker.delegate = self
-        mainView.picker.dataSource = self
-        mainView.picker.myDelegate = self
+        mainView.collectionView.delegate = self
+        mainView.collectionView.dataSource = self
+        mainView.collectionView.myDelegate = self
     }
     
     private func loadFirstNumbers() {
         viewModel?.showSimpleNumbers(startNumber: 2)
         viewModel?.showFibsNumbers(number: 100)
     }
+    
 }
 
-extension MainViewController: UIPickerViewDelegate, UIPickerViewDataSource {
-    func numberOfComponents(in pickerView: UIPickerView) -> Int {
-        2
-    }
+extension MainViewController: CustomCollectionViewDelegate {
     
-    func pickerView(_ pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int {
-        
-        if component == 0 {
-            return simpleNumbers.count
-        } else if component == 1 {
-            return fibsNumbers.count
-        }
-        
-        fatalError("Ошибка в массиве с числами")
-    }
-    
-    func pickerView(_ pickerView: UIPickerView, viewForRow row: Int, forComponent component: Int, reusing view: UIView?) -> UIView {
-        
-        if component == 0 {
-            let label = UILabel()
-            label.text = simpleNumbers[row].description
-            label.textAlignment = .center
-            
-            if row % 2 == 0 {
-                label.backgroundColor = .systemBackground
-            } else if row % 2 == 1 {
-                label.backgroundColor = .systemGray4
-            }
-            return label
-            
-        } else if component == 1 {
-            let label = UILabel()
-            label.text = String(format: "%.0f", fibsNumbers[row]).description
-            label.textAlignment = .center
-            
-            if row % 2 == 0 {
-                label.backgroundColor = .systemGray4
-            } else if row % 2 == 1 {
-                label.backgroundColor = .systemBackground
-            }
-            return label
-        }
-        fatalError("Не удалось отобразить ячейку")
-    }
-    
-    func pickerView(_ pickerView: UIPickerView, widthForComponent component: Int) -> CGFloat {
-        120
-    }
-    
-    func pickerView(_ pickerView: UIPickerView, rowHeightForComponent component: Int) -> CGFloat {
-        70
-    }
-}
-
-extension MainViewController: CustomPickerViewDelegate {
-    
-    func didTapped(_ picker: CustomPickerView) {
+    func didTapped(_ picker: CustomCollectionView) {
         
         DispatchQueue.global(qos: .userInitiated).async(flags: .barrier) {
             guard let simpleNumber = self.simpleNumbers.last else { fatalError("Сбой при генерации простых чисел")}
@@ -129,6 +76,22 @@ extension MainViewController: CustomPickerViewDelegate {
             self.viewModel?.showSimpleNumbers(startNumber: simpleNumber)
             self.viewModel?.showFibsNumbers(number: Double(self.fibsNumbers.count))
         }
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        simpleNumbers.count
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        guard let cell = mainView.collectionView.dequeueReusableCell(withReuseIdentifier: CustomCollectionViewCell.cellId, for: indexPath) as? CustomCollectionViewCell else { fatalError("Не удалось создать ячейку") }
+        cell.numberLabel.text = simpleNumbers[indexPath.row].description
+        
+        switch indexPath.row {
+        case let x where x % 4 == 0: cell.backgroundColor = .gray
+        case let y where y % 4 == 3: cell.backgroundColor = .gray
+        default: cell.backgroundColor = .white
+        }
+        return cell
     }
 }
 

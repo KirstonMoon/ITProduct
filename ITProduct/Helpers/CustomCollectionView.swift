@@ -7,13 +7,13 @@
 
 import UIKit
 
-protocol CustomPickerViewDelegate: AnyObject {
-    func didTapped(_ picker: CustomPickerView)
+protocol CustomCollectionViewDelegate: AnyObject {
+    func didTapped(_ picker: CustomCollectionView)
 }
 
-final class CustomPickerView: UIPickerView {
+final class CustomCollectionView: UICollectionView {
 
-    weak var myDelegate: CustomPickerViewDelegate?
+    weak var myDelegate: CustomCollectionViewDelegate?
 
     override func hitTest(_ point: CGPoint, with event: UIEvent?) -> UIView? {
 

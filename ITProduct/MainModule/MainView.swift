@@ -15,12 +15,14 @@ class MainView: UIView {
         setupAppearance()
     }
     
+    var collectionView: CustomCollectionView!
+    
     private func setupAppearance() {
         backgroundColor = .systemBackground
         setupGeneratorLabel()
         setupSimpleNumbersLabel()
         setupFibonacciNumbersLabel()
-        setupPicker()
+        setupCollectionView()
     }
     
     let generatorLabel: UILabel = {
@@ -48,11 +50,24 @@ class MainView: UIView {
         return label
     }()
     
-    let picker: CustomPickerView = {
-        let picker = CustomPickerView()
-        picker.translatesAutoresizingMaskIntoConstraints = false
-        return picker
-    }()
+    private func setupCollectionView() {
+        let layout = UICollectionViewFlowLayout()
+        layout.itemSize = CGSize(width: 150, height: 100)
+        
+        collectionView = CustomCollectionView(frame: frame, collectionViewLayout: layout)
+        collectionView.register(CustomCollectionViewCell.self, forCellWithReuseIdentifier: CustomCollectionViewCell.cellId)
+        collectionView.showsVerticalScrollIndicator = false
+        collectionView.backgroundColor = .systemBackground
+        addSubview(collectionView)
+        
+        collectionView.translatesAutoresizingMaskIntoConstraints = false
+        NSLayoutConstraint.activate([
+            collectionView.topAnchor.constraint(equalTo: simpleNumbersLabel.bottomAnchor),
+            collectionView.leadingAnchor.constraint(equalTo: safeAreaLayoutGuide.leadingAnchor),
+            collectionView.trailingAnchor.constraint(equalTo: safeAreaLayoutGuide.trailingAnchor),
+            collectionView.bottomAnchor.constraint(equalTo: safeAreaLayoutGuide.bottomAnchor)
+        ])
+    }
     
     private func setupGeneratorLabel() {
         addSubview(generatorLabel)
@@ -75,16 +90,6 @@ class MainView: UIView {
         NSLayoutConstraint.activate([
             fibonacciNumbersLabel.topAnchor.constraint(equalTo: generatorLabel.bottomAnchor, constant: 35),
             fibonacciNumbersLabel.trailingAnchor.constraint(equalTo: safeAreaLayoutGuide.trailingAnchor, constant: -20)
-        ])
-    }
-    
-    private func setupPicker() {
-        addSubview(picker)
-        NSLayoutConstraint.activate([
-            picker.topAnchor.constraint(equalTo: simpleNumbersLabel.bottomAnchor, constant: 20),
-            picker.leadingAnchor.constraint(equalTo: safeAreaLayoutGuide.leadingAnchor),
-            picker.trailingAnchor.constraint(equalTo: safeAreaLayoutGuide.trailingAnchor),
-            picker.heightAnchor.constraint(equalToConstant: 600)
         ])
     }
     
