@@ -72,50 +72,42 @@ extension MainViewController: UIPickerViewDelegate, UIPickerViewDataSource {
     
     func pickerView(_ pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int {
         
-        switch component {
-        
-        case 0:
+        if component == 0 {
             return simpleNumbers.count
-        case 1:
+        } else if component == 1 {
             return fibsNumbers.count
-        default:
-            fatalError("Сбой при генерации чисел")
         }
+        
+        fatalError("Ошибка в массиве с числами")
     }
     
     func pickerView(_ pickerView: UIPickerView, viewForRow row: Int, forComponent component: Int, reusing view: UIView?) -> UIView {
         
-        switch component {
-        case 0:
+        if component == 0 {
             let label = UILabel()
             label.text = simpleNumbers[row].description
             label.textAlignment = .center
             
-            switch row % 2 {
-            case 0:
+            if row % 2 == 0 {
                 label.backgroundColor = .systemBackground
-            default:
+            } else if row % 2 == 1 {
                 label.backgroundColor = .systemGray4
             }
-            
             return label
             
-        case 1:
+        } else if component == 1 {
             let label = UILabel()
             label.text = String(format: "%.0f", fibsNumbers[row]).description
             label.textAlignment = .center
             
-            switch row % 2 {
-            case 0:
+            if row % 2 == 0 {
                 label.backgroundColor = .systemGray4
-            default:
+            } else if row % 2 == 1 {
                 label.backgroundColor = .systemBackground
             }
-
             return label
-        default:
-            fatalError("Сбой при отображении ячеек")
         }
+        fatalError("Не удалось отобразить ячейку")
     }
     
     func pickerView(_ pickerView: UIPickerView, widthForComponent component: Int) -> CGFloat {
@@ -137,5 +129,11 @@ extension MainViewController: CustomPickerViewDelegate {
             self.viewModel?.showSimpleNumbers(startNumber: simpleNumber)
             self.viewModel?.showFibsNumbers(number: Double(self.fibsNumbers.count))
         }
+    }
+}
+
+extension Int {
+    func square() -> Int {
+        return self * self
     }
 }
