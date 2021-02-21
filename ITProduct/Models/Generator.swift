@@ -13,13 +13,13 @@ final class Generator {
         
         let max = startNumber
         var testValue = 2
-        var data = (2...max * 2).map{$0}
+        var data = (2...max * max).map{$0}
         
         while (testValue * testValue <= max) {
             data.removeAll(where: {$0 >= testValue * testValue && $0.isMultiple(of: testValue)})
             testValue = data.first(where: {$0 > testValue})!
         }
-        
+        print("генерация массив =  \(data.count) элементов")
         return data
     }
     

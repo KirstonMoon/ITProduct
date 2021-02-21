@@ -18,10 +18,22 @@ class MainViewController: UIViewController {
         return view
     }
     
-    private var simpleNumbers = [Int]() {
+    private var simpleNumbers = [Int]()
+//    {
+//        didSet {
+//            DispatchQueue.main.async {
+//                self.mainView.collectionView.reloadData()
+//                print("\(self.simpleNumbers.count) - общее количество чисел")
+//            }
+//        }
+//    }
+    
+    private var generatedSimpleNumbers = [Int]() {
         didSet {
             DispatchQueue.main.async {
+                self.simpleNumbers.append(contentsOf: self.generatedSimpleNumbers.prefix(50))
                 self.mainView.collectionView.reloadData()
+                print("\(self.simpleNumbers.count) - общее количество чисел")
             }
         }
     }
@@ -34,11 +46,12 @@ class MainViewController: UIViewController {
         }
     }
     
-    var viewModel: MainViewModelProtocol? {
+    var viewModel: MainViewModelProtocol?
+    {
         didSet {
             self.viewModel?.getSimpleNumbers = { [weak self] viewModel in
-                guard let numbers = viewModel.simpleNumbers else { fatalError("Сбой при генерации простых чисел")}
-                self?.simpleNumbers = numbers
+                guard let recievedNumbers = viewModel.simpleNumbers else { fatalError("Сбой при получение простых чисел")}
+                self?.generatedSimpleNumbers = recievedNumbers
             }
             self.viewModel?.getFibsNumbers = { [weak self] viewModel in
                 guard let numbers = viewModel.fibsNumbers else { fatalError("Сбой при генерации чисел Фибоначчи")}
@@ -59,7 +72,7 @@ class MainViewController: UIViewController {
     }
     
     private func loadFirstNumbers() {
-        viewModel?.showSimpleNumbers(startNumber: 100)
+        viewModel?.showSimpleNumbers(startNumber: 15)
         viewModel?.showFibsNumbers(number: 300)
     }
     
@@ -86,9 +99,23 @@ extension MainViewController: UICollectionViewDelegate, UICollectionViewDataSour
     func collectionView(_ collectionView: UICollectionView, willDisplay cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {
         
         if indexPath.row == simpleNumbers.count - 50 {
-            DispatchQueue.global(qos: .userInitiated).async {
-                self.viewModel?.showSimpleNumbers(startNumber: self.simpleNumbers.last!)
+            
+            let difference = generatedSimpleNumbers.count - simpleNumbers.count
+            if difference < 50 {
+                self.generatedSimpleNumbers.removeAll(where: <#T##(Int) throws -> Bool#>)
+                self.generatedSimpleNumbers.append(contentsOf: viewModel?.simpleNumbers)
             }
+            
+//            let difference = (viewModel?.simpleNumbers!.count)! - simpleNumbers.count
+//            print("разница в \(difference) элементов")
+//
+//            if difference < 50 {
+//
+//                simpleNumbers.append(contentsOf: (viewModel?.simpleNumbers?.prefix(50))!)
+//                DispatchQueue.global(qos: .userInitiated).async {
+//                    self.viewModel?.showSimpleNumbers(startNumber: self.simpleNumbers.last!)
+//                }
+//            }
         }
     }
 }
