@@ -20,8 +20,8 @@ class MainView: UIView {
     private func setupAppearance() {
         backgroundColor = .systemBackground
         setupGeneratorLabel()
-        setupSimpleNumbersLabel()
-        setupFibonacciNumbersLabel()
+        setupSimpleNumbersButton()
+        setupFibonacciNumbersButton()
         setupCollectionView()
     }
     
@@ -34,22 +34,23 @@ class MainView: UIView {
         return label
     }()
     
-    let simpleNumbersLabel: UILabel = {
-        let label = UILabel()
-        label.translatesAutoresizingMaskIntoConstraints = false
-        label.font = .systemFont(ofSize: 22)
-        label.text = "Простые числа"
-        return label
+    let simpleNumbersButton: UIButton = {
+        let bt = UIButton()
+        bt.translatesAutoresizingMaskIntoConstraints = false
+        bt.backgroundColor = #colorLiteral(red: 0.2392156869, green: 0.6745098233, blue: 0.9686274529, alpha: 1)
+        bt.setTitle("Простые числа", for: .normal)
+        return bt
     }()
     
-    let fibonacciNumbersLabel: UILabel = {
-        let label = UILabel()
-        label.translatesAutoresizingMaskIntoConstraints = false
-        label.font = .systemFont(ofSize: 22)
-        label.text = "Числа Фибоначчи"
-        return label
-    }()
     
+    let fibonacciNumbersButton: UIButton = {
+        let bt = UIButton()
+        bt.translatesAutoresizingMaskIntoConstraints = false
+        bt.backgroundColor = #colorLiteral(red: 0.2392156869, green: 0.6745098233, blue: 0.9686274529, alpha: 1)
+        bt.setTitle("Числа Фибоначчи", for: .normal)
+        return bt
+    }()
+
     private func setupCollectionView() {
         let layout = UICollectionViewFlowLayout()
         layout.itemSize.height = 100
@@ -63,7 +64,7 @@ class MainView: UIView {
         
         collectionView.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
-            collectionView.topAnchor.constraint(equalTo: simpleNumbersLabel.bottomAnchor),
+            collectionView.topAnchor.constraint(equalTo: simpleNumbersButton.bottomAnchor, constant: 20),
             collectionView.leadingAnchor.constraint(equalTo: safeAreaLayoutGuide.leadingAnchor),
             collectionView.trailingAnchor.constraint(equalTo: safeAreaLayoutGuide.trailingAnchor),
             collectionView.bottomAnchor.constraint(equalTo: safeAreaLayoutGuide.bottomAnchor)
@@ -78,19 +79,25 @@ class MainView: UIView {
         ])
     }
     
-    private func setupSimpleNumbersLabel() {
-        addSubview(simpleNumbersLabel)
+    private func setupSimpleNumbersButton() {
+        addSubview(simpleNumbersButton)
+        simpleNumbersButton.layer.cornerRadius = 25
         NSLayoutConstraint.activate([
-            simpleNumbersLabel.topAnchor.constraint(equalTo: generatorLabel.bottomAnchor, constant: 35),
-            simpleNumbersLabel.leadingAnchor.constraint(equalTo: safeAreaLayoutGuide.leadingAnchor,constant: 20),
+            simpleNumbersButton.topAnchor.constraint(equalTo: generatorLabel.bottomAnchor, constant: 35),
+            simpleNumbersButton.leadingAnchor.constraint(equalTo: safeAreaLayoutGuide.leadingAnchor,constant: 20),
+            simpleNumbersButton.heightAnchor.constraint(equalToConstant: 50),
+            simpleNumbersButton.widthAnchor.constraint(equalToConstant: 175)
         ])
     }
     
-    private func setupFibonacciNumbersLabel() {
-        addSubview(fibonacciNumbersLabel)
+    private func setupFibonacciNumbersButton() {
+        addSubview(fibonacciNumbersButton)
+        fibonacciNumbersButton.layer.cornerRadius = 25
         NSLayoutConstraint.activate([
-            fibonacciNumbersLabel.topAnchor.constraint(equalTo: generatorLabel.bottomAnchor, constant: 35),
-            fibonacciNumbersLabel.trailingAnchor.constraint(equalTo: safeAreaLayoutGuide.trailingAnchor, constant: -20)
+            fibonacciNumbersButton.topAnchor.constraint(equalTo: generatorLabel.bottomAnchor, constant: 35),
+            fibonacciNumbersButton.trailingAnchor.constraint(equalTo: safeAreaLayoutGuide.trailingAnchor,constant: -20),
+            fibonacciNumbersButton.heightAnchor.constraint(equalToConstant: 50),
+            fibonacciNumbersButton.widthAnchor.constraint(equalToConstant: 175)
         ])
     }
     
