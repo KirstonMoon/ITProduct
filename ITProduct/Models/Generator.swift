@@ -9,17 +9,15 @@ import Foundation
 
 final class Generator {
     
-    func generateSimpleNumbers(startNumber: Int) -> [Int] {
+    func generateSimpleNumbers(toMax: Int) -> [Int] {
         
-        let max = startNumber
         var testValue = 2
-        var data = (2...max * max).map{$0}
+        var data = (2...toMax * 2).map{$0}
         
-        while (testValue * testValue <= max) {
+        while (testValue * testValue <= toMax * 2) {
             data.removeAll(where: {$0 >= testValue * testValue && $0.isMultiple(of: testValue)})
             testValue = data.first(where: {$0 > testValue})!
         }
-        print("генерация массив =  \(data.count) элементов")
         return data
     }
     

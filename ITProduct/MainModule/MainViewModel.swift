@@ -41,7 +41,7 @@ class MainViewModel: MainViewModelProtocol {
     var getFibsNumbers: ((MainViewModelProtocol) -> Void)?
     
     func showSimpleNumbers(startNumber: Int) {
-        self.simpleNumbers = self.generator.generateSimpleNumbers(startNumber: startNumber)
+        self.simpleNumbers = self.generator.generateSimpleNumbers(toMax: startNumber)
     }
     
     func showFibsNumbers(number: Double) {
