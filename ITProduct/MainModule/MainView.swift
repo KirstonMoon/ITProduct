@@ -42,7 +42,6 @@ class MainView: UIView {
         return bt
     }()
     
-    
     let fibonacciNumbersButton: UIButton = {
         let bt = UIButton()
         bt.translatesAutoresizingMaskIntoConstraints = false

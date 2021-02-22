@@ -53,6 +53,7 @@ class MainViewController: UIViewController {
         super.viewDidLoad()
         setupDelegatesAndDataSource()
         loadFirstNumbers()
+        addTargetToButtons()
     }
     
     private func setupDelegatesAndDataSource() {
@@ -63,6 +64,11 @@ class MainViewController: UIViewController {
     private func loadFirstNumbers() {
         viewModel?.showSimpleNumbers(startNumber: 100)
         viewModel?.showFibsNumbers(number: 300)
+    }
+    
+    private func addTargetToButtons() {
+        mainView.simpleNumbersButton.addTarget(self, action: #selector(switchToSimpleNumbes(sender:)), for: .touchUpInside)
+        mainView.fibonacciNumbersButton.addTarget(self, action: #selector(switchToFibsNumbes(sender:)), for: .touchUpInside)
     }
     
 }
@@ -96,3 +102,17 @@ extension MainViewController: UICollectionViewDelegate, UICollectionViewDataSour
     }
 }
 
+// MARK: - Buttons setup
+
+
+
+extension MainViewController {
+    
+    @objc func switchToSimpleNumbes(sender: UIButton) {
+        print("das")
+    }
+    
+    @objc func switchToFibsNumbes(sender: UIButton) {
+        print("dasd")
+    }
+}
