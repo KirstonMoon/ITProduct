@@ -15,12 +15,14 @@ class MainView: UIView {
         setupAppearance()
     }
     
+    var collectionView: UICollectionView!
+    
     private func setupAppearance() {
         backgroundColor = .systemBackground
         setupGeneratorLabel()
-        setupSimpleNumbersLabel()
-        setupFibonacciNumbersLabel()
-        setupPicker()
+        setupSimpleNumbersButton()
+        setupFibonacciNumbersButton()
+        setupCollectionView()
     }
     
     let generatorLabel: UILabel = {
@@ -32,27 +34,41 @@ class MainView: UIView {
         return label
     }()
     
-    let simpleNumbersLabel: UILabel = {
-        let label = UILabel()
-        label.translatesAutoresizingMaskIntoConstraints = false
-        label.font = .systemFont(ofSize: 22)
-        label.text = "Простые числа"
-        return label
+    let simpleNumbersButton: UIButton = {
+        let bt = UIButton()
+        bt.translatesAutoresizingMaskIntoConstraints = false
+        bt.backgroundColor = #colorLiteral(red: 0.2392156869, green: 0.6745098233, blue: 0.9686274529, alpha: 1)
+        bt.setTitle("Простые числа", for: .normal)
+        return bt
     }()
     
-    let fibonacciNumbersLabel: UILabel = {
-        let label = UILabel()
-        label.translatesAutoresizingMaskIntoConstraints = false
-        label.font = .systemFont(ofSize: 22)
-        label.text = "Числа Фибоначчи"
-        return label
+    let fibonacciNumbersButton: UIButton = {
+        let bt = UIButton()
+        bt.translatesAutoresizingMaskIntoConstraints = false
+        bt.backgroundColor = .gray
+        bt.setTitle("Числа Фибоначчи", for: .normal)
+        return bt
     }()
-    
-    let picker: CustomPickerView = {
-        let picker = CustomPickerView()
-        picker.translatesAutoresizingMaskIntoConstraints = false
-        return picker
-    }()
+
+    private func setupCollectionView() {
+        let layout = UICollectionViewFlowLayout()
+        layout.itemSize.height = 100
+        layout.itemSize.width = UIScreen.main.bounds.width / 2 - UIScreen.main.bounds.width * 0.1
+        
+        collectionView = UICollectionView(frame: frame, collectionViewLayout: layout)
+        collectionView.register(CustomCollectionViewCell.self, forCellWithReuseIdentifier: CustomCollectionViewCell.cellId)
+        collectionView.showsVerticalScrollIndicator = false
+        collectionView.backgroundColor = .systemBackground
+        addSubview(collectionView)
+        
+        collectionView.translatesAutoresizingMaskIntoConstraints = false
+        NSLayoutConstraint.activate([
+            collectionView.topAnchor.constraint(equalTo: fibonacciNumbersButton.bottomAnchor, constant: 20),
+            collectionView.leadingAnchor.constraint(equalTo: safeAreaLayoutGuide.leadingAnchor),
+            collectionView.trailingAnchor.constraint(equalTo: safeAreaLayoutGuide.trailingAnchor),
+            collectionView.bottomAnchor.constraint(equalTo: safeAreaLayoutGuide.bottomAnchor)
+        ])
+    }
     
     private func setupGeneratorLabel() {
         addSubview(generatorLabel)
@@ -62,29 +78,25 @@ class MainView: UIView {
         ])
     }
     
-    private func setupSimpleNumbersLabel() {
-        addSubview(simpleNumbersLabel)
+    private func setupSimpleNumbersButton() {
+        addSubview(simpleNumbersButton)
+        simpleNumbersButton.layer.cornerRadius = 25
         NSLayoutConstraint.activate([
-            simpleNumbersLabel.topAnchor.constraint(equalTo: generatorLabel.bottomAnchor, constant: 35),
-            simpleNumbersLabel.leadingAnchor.constraint(equalTo: safeAreaLayoutGuide.leadingAnchor,constant: 20),
+            simpleNumbersButton.topAnchor.constraint(equalTo: generatorLabel.bottomAnchor, constant: 35),
+            simpleNumbersButton.centerXAnchor.constraint(equalTo: safeAreaLayoutGuide.centerXAnchor),
+            simpleNumbersButton.heightAnchor.constraint(equalToConstant: 50),
+            simpleNumbersButton.widthAnchor.constraint(equalToConstant: 175)
         ])
     }
     
-    private func setupFibonacciNumbersLabel() {
-        addSubview(fibonacciNumbersLabel)
+    private func setupFibonacciNumbersButton() {
+        addSubview(fibonacciNumbersButton)
+        fibonacciNumbersButton.layer.cornerRadius = 25
         NSLayoutConstraint.activate([
-            fibonacciNumbersLabel.topAnchor.constraint(equalTo: generatorLabel.bottomAnchor, constant: 35),
-            fibonacciNumbersLabel.trailingAnchor.constraint(equalTo: safeAreaLayoutGuide.trailingAnchor, constant: -20)
-        ])
-    }
-    
-    private func setupPicker() {
-        addSubview(picker)
-        NSLayoutConstraint.activate([
-            picker.topAnchor.constraint(equalTo: simpleNumbersLabel.bottomAnchor, constant: 20),
-            picker.leadingAnchor.constraint(equalTo: safeAreaLayoutGuide.leadingAnchor),
-            picker.trailingAnchor.constraint(equalTo: safeAreaLayoutGuide.trailingAnchor),
-            picker.heightAnchor.constraint(equalToConstant: 600)
+            fibonacciNumbersButton.topAnchor.constraint(equalTo: simpleNumbersButton.bottomAnchor, constant: 5),
+            fibonacciNumbersButton.centerXAnchor.constraint(equalTo: safeAreaLayoutGuide.centerXAnchor),
+            fibonacciNumbersButton.heightAnchor.constraint(equalToConstant: 50),
+            fibonacciNumbersButton.widthAnchor.constraint(equalToConstant: 175)
         ])
     }
     

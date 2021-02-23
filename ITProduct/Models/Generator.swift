@@ -7,23 +7,29 @@
 
 import Foundation
 
-final class Generator {
+protocol NumbersGenerator {
+    func generateNumbers(withNumber: Int) -> [Double]
+}
+
+final class GeneratorSimpleNumbers: NumbersGenerator {
     
-    func generateSimpleNumbers(startNumber: Int) -> [Int] {
-        
-        let max = startNumber + 1000
+    func generateNumbers(withNumber: Int) -> [Double] {
         var testValue = 2
-        var data = (2...max).map{$0}
+        var data = (2...withNumber * 2).map{$0}
         
-        while (testValue.powerOf2() <= max) {
-            data.removeAll(where: {$0 >= testValue.powerOf2() && $0.isMultiple(of: testValue)})
-            testValue = data.first(where: {$0 > testValue})!
+        while (testValue * testValue <= withNumber * 2) {
+            data.removeAll(where: {$0 >= testValue * testValue && $0.isMultiple(of: testValue)})
+            guard let value = data.first(where: {$0 > testValue}) else { fatalError("Ошибка в генерации простых чисел") }
+            testValue = value
         }
-        return data
+        return data.map{ Double($0) }
     }
+}
+
+final class GeneratorFibsNumbers: NumbersGenerator {
     
-    func generateFibsNumbers(number: Int) -> [Double] {
-        let toNumber = number + 50
+    func generateNumbers(withNumber: Int) -> [Double] {
+        let toNumber = withNumber + 20
         var array: [Double] = [0, 1]
         
         while array.count < toNumber {
@@ -32,4 +38,3 @@ final class Generator {
         return array
     }
 }
-

@@ -7,20 +7,20 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		206580DE25DFE1F200D0A4E6 /* CustomCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 206580DD25DFE1F200D0A4E6 /* CustomCollectionViewCell.swift */; };
 		20B3731B25DE9B1E00CC6336 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 20B3731A25DE9B1E00CC6336 /* AppDelegate.swift */; };
 		20B3731D25DE9B1E00CC6336 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 20B3731C25DE9B1E00CC6336 /* SceneDelegate.swift */; };
 		20B3731F25DE9B1E00CC6336 /* MainViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 20B3731E25DE9B1E00CC6336 /* MainViewController.swift */; };
 		20B3732425DE9B2100CC6336 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 20B3732325DE9B2100CC6336 /* Assets.xcassets */; };
 		20B3732725DE9B2100CC6336 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 20B3732525DE9B2100CC6336 /* LaunchScreen.storyboard */; };
-		20E83A8F25DECBA0001290E3 /* CustomPickerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 20E83A8E25DECBA0001290E3 /* CustomPickerView.swift */; };
 		20ED0AB725DEA776007C3BA8 /* MainViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 20ED0AB625DEA776007C3BA8 /* MainViewModel.swift */; };
 		20ED0ABB25DEA7CD007C3BA8 /* Generator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 20ED0ABA25DEA7CD007C3BA8 /* Generator.swift */; };
 		20ED0ABF25DEADEC007C3BA8 /* ModuleAssembler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 20ED0ABE25DEADEC007C3BA8 /* ModuleAssembler.swift */; };
 		20ED0AC325DEAE4A007C3BA8 /* MainView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 20ED0AC225DEAE4A007C3BA8 /* MainView.swift */; };
-		20ED0AC925DEB5F8007C3BA8 /* IntExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 20ED0AC825DEB5F8007C3BA8 /* IntExtension.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		206580DD25DFE1F200D0A4E6 /* CustomCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomCollectionViewCell.swift; sourceTree = "<group>"; };
 		20B3731725DE9B1E00CC6336 /* ITProduct.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ITProduct.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		20B3731A25DE9B1E00CC6336 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		20B3731C25DE9B1E00CC6336 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -28,12 +28,10 @@
 		20B3732325DE9B2100CC6336 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		20B3732625DE9B2100CC6336 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		20B3732825DE9B2100CC6336 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		20E83A8E25DECBA0001290E3 /* CustomPickerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomPickerView.swift; sourceTree = "<group>"; };
 		20ED0AB625DEA776007C3BA8 /* MainViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainViewModel.swift; sourceTree = "<group>"; };
 		20ED0ABA25DEA7CD007C3BA8 /* Generator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Generator.swift; sourceTree = "<group>"; };
 		20ED0ABE25DEADEC007C3BA8 /* ModuleAssembler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModuleAssembler.swift; sourceTree = "<group>"; };
 		20ED0AC225DEAE4A007C3BA8 /* MainView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainView.swift; sourceTree = "<group>"; };
-		20ED0AC825DEB5F8007C3BA8 /* IntExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IntExtension.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -67,8 +65,6 @@
 			isa = PBXGroup;
 			children = (
 				20B3732F25DE9BE300CC6336 /* Application */,
-				20E83A8D25DECB85001290E3 /* Helpers */,
-				20ED0AC725DEB5E9007C3BA8 /* Extensions */,
 				20ED0AB925DEA7C2007C3BA8 /* Models */,
 				20B3733125DE9BEE00CC6336 /* MainModule */,
 			);
@@ -98,28 +94,13 @@
 			path = MainModule;
 			sourceTree = "<group>";
 		};
-		20E83A8D25DECB85001290E3 /* Helpers */ = {
-			isa = PBXGroup;
-			children = (
-				20E83A8E25DECBA0001290E3 /* CustomPickerView.swift */,
-			);
-			path = Helpers;
-			sourceTree = "<group>";
-		};
 		20ED0AB925DEA7C2007C3BA8 /* Models */ = {
 			isa = PBXGroup;
 			children = (
 				20ED0ABA25DEA7CD007C3BA8 /* Generator.swift */,
+				206580DD25DFE1F200D0A4E6 /* CustomCollectionViewCell.swift */,
 			);
 			path = Models;
-			sourceTree = "<group>";
-		};
-		20ED0AC725DEB5E9007C3BA8 /* Extensions */ = {
-			isa = PBXGroup;
-			children = (
-				20ED0AC825DEB5F8007C3BA8 /* IntExtension.swift */,
-			);
-			path = Extensions;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -192,12 +173,11 @@
 			buildActionMask = 2147483647;
 			files = (
 				20B3731F25DE9B1E00CC6336 /* MainViewController.swift in Sources */,
+				206580DE25DFE1F200D0A4E6 /* CustomCollectionViewCell.swift in Sources */,
 				20ED0AC325DEAE4A007C3BA8 /* MainView.swift in Sources */,
 				20B3731B25DE9B1E00CC6336 /* AppDelegate.swift in Sources */,
 				20ED0ABF25DEADEC007C3BA8 /* ModuleAssembler.swift in Sources */,
 				20B3731D25DE9B1E00CC6336 /* SceneDelegate.swift in Sources */,
-				20ED0AC925DEB5F8007C3BA8 /* IntExtension.swift in Sources */,
-				20E83A8F25DECBA0001290E3 /* CustomPickerView.swift in Sources */,
 				20ED0AB725DEA776007C3BA8 /* MainViewModel.swift in Sources */,
 				20ED0ABB25DEA7CD007C3BA8 /* Generator.swift in Sources */,
 			);
