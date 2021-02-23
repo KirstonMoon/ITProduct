@@ -102,10 +102,10 @@ extension MainViewController: UICollectionViewDelegate, UICollectionViewDataSour
 private extension MainViewController {
     
     @objc func switchToSimpleNumbes(sender: UIButton) {
-        
+
         if mainView.simpleNumbersButton.backgroundColor != #colorLiteral(red: 0.2392156869, green: 0.6745098233, blue: 0.9686274529, alpha: 1) {
             mainView.simpleNumbersButton.backgroundColor = #colorLiteral(red: 0.2392156869, green: 0.6745098233, blue: 0.9686274529, alpha: 1)
-            mainView.fibonacciNumbersButton.backgroundColor = .gray
+            mainView.fibonacciNumbersButton.backgroundColor = .systemGray
             
             mainView.collectionView.setContentOffset(.zero, animated: true)
             
@@ -119,7 +119,7 @@ private extension MainViewController {
         
         if mainView.fibonacciNumbersButton.backgroundColor != #colorLiteral(red: 0.2392156869, green: 0.6745098233, blue: 0.9686274529, alpha: 1) {
             mainView.fibonacciNumbersButton.backgroundColor = #colorLiteral(red: 0.2392156869, green: 0.6745098233, blue: 0.9686274529, alpha: 1)
-            mainView.simpleNumbersButton.backgroundColor = .gray
+            mainView.simpleNumbersButton.backgroundColor = .systemGray
             
             mainView.collectionView.setContentOffset(.zero, animated: true)
             
