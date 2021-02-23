@@ -18,31 +18,20 @@ class MainViewController: UIViewController {
         return view
     }
     
-    private var simpleNumbers = [Int]() {
+    private var allNumbers = [Double]() {
         didSet {
             DispatchQueue.main.async {
-                self.mainView.picker.reloadAllComponents()
+                self.mainView.collectionView.reloadData()
             }
         }
     }
     
-    private var fibsNumbers = [Double]() {
+    var viewModel: MainViewModelProtocol?
+    {
         didSet {
-            DispatchQueue.main.async {
-                self.mainView.picker.reloadAllComponents()
-            }
-        }
-    }
-    
-    var viewModel: MainViewModelProtocol? {
-        didSet {
-            self.viewModel?.getSimpleNumbers = { [weak self] viewModel in
-                guard let numbers = viewModel.simpleNumbers else { fatalError("Сбой при генерации простых чисел")}
-                self?.simpleNumbers = numbers
-            }
-            self.viewModel?.getFibsNumbers = { [weak self] viewModel in
-                guard let numbers = viewModel.fibsNumbers else { fatalError("Сбой при генерации чисел Фибоначчи")}
-                self?.fibsNumbers = numbers
+            self.viewModel?.getAllNumbers = { [weak self] viewModel in
+                guard let recievedNumbers = viewModel.allNumbers else { fatalError("Ошибка в получении чисел из viewModel")}
+                self?.allNumbers = recievedNumbers
             }
         }
     }
@@ -51,91 +40,92 @@ class MainViewController: UIViewController {
         super.viewDidLoad()
         setupDelegatesAndDataSource()
         loadFirstNumbers()
+        addActionsToButtons()
     }
     
     private func setupDelegatesAndDataSource() {
-        mainView.picker.delegate = self
-        mainView.picker.dataSource = self
-        mainView.picker.myDelegate = self
+        mainView.collectionView.delegate = self
+        mainView.collectionView.dataSource = self
     }
     
     private func loadFirstNumbers() {
-        viewModel?.showSimpleNumbers(startNumber: 2)
-        viewModel?.showFibsNumbers(number: 100)
+        viewModel?.showSimpleNumbers(withNumber: 100)
+    }
+    
+    private func addActionsToButtons() {
+        mainView.simpleNumbersButton.addTarget(self, action: #selector(switchToSimpleNumbes(sender:)), for: .touchUpInside)
+        mainView.fibonacciNumbersButton.addTarget(self, action: #selector(switchToFibsNumbes(sender:)), for: .touchUpInside)
+    }
+    
+}
+
+extension MainViewController: UICollectionViewDelegate, UICollectionViewDataSource {
+    
+    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        allNumbers.count
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        
+        guard let cell = mainView.collectionView.dequeueReusableCell(withReuseIdentifier: CustomCollectionViewCell.cellId, for: indexPath) as? CustomCollectionViewCell else { fatalError("Не удалось создать ячейку") }
+        
+        cell.numberLabel.text = String(format: "%.0f", allNumbers[indexPath.row]).description
+        
+        if indexPath.row % 4 == 0 || indexPath.row % 4 == 3 {
+            cell.backgroundColor = .systemGray4
+        } else {
+            cell.backgroundColor = .systemGray
+        }
+        
+        return cell
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, willDisplay cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {
+        
+        if indexPath.row == allNumbers.count - 30 {
+            if mainView.simpleNumbersButton.backgroundColor == #colorLiteral(red: 0.2392156869, green: 0.6745098233, blue: 0.9686274529, alpha: 1) {
+                DispatchQueue.global(qos: .userInitiated).async {
+                    guard let lastNumber = self.allNumbers.last else { fatalError("Ошибка в массиве всех чисел в классе MainViewController")}
+                    self.viewModel?.showSimpleNumbers(withNumber: Int(lastNumber))
+                }
+            } else if mainView.fibonacciNumbersButton.backgroundColor == #colorLiteral(red: 0.2392156869, green: 0.6745098233, blue: 0.9686274529, alpha: 1) {
+                DispatchQueue.global(qos: .userInitiated).async {
+                    self.viewModel?.showFibsNumbers(withNumber: self.allNumbers.count)
+                }
+            }
+        }
     }
 }
 
-extension MainViewController: UIPickerViewDelegate, UIPickerViewDataSource {
-    func numberOfComponents(in pickerView: UIPickerView) -> Int {
-        2
-    }
+// MARK: - Buttons function
+
+private extension MainViewController {
     
-    func pickerView(_ pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int {
-        
-        switch component {
-        
-        case 0:
-            return simpleNumbers.count
-        case 1:
-            return fibsNumbers.count
-        default:
-            fatalError("Сбой при генерации чисел")
+    @objc func switchToSimpleNumbes(sender: UIButton) {
+
+        if mainView.simpleNumbersButton.backgroundColor != #colorLiteral(red: 0.2392156869, green: 0.6745098233, blue: 0.9686274529, alpha: 1) {
+            mainView.simpleNumbersButton.backgroundColor = #colorLiteral(red: 0.2392156869, green: 0.6745098233, blue: 0.9686274529, alpha: 1)
+            mainView.fibonacciNumbersButton.backgroundColor = .systemGray
+            
+            mainView.collectionView.setContentOffset(.zero, animated: true)
+            
+            DispatchQueue.global(qos: .userInitiated).async {
+                self.viewModel?.showSimpleNumbers(withNumber: 100)
+            }
         }
     }
     
-    func pickerView(_ pickerView: UIPickerView, viewForRow row: Int, forComponent component: Int, reusing view: UIView?) -> UIView {
+    @objc func switchToFibsNumbes(sender: UIButton) {
         
-        switch component {
-        case 0:
-            let label = UILabel()
-            label.text = simpleNumbers[row].description
-            label.textAlignment = .center
+        if mainView.fibonacciNumbersButton.backgroundColor != #colorLiteral(red: 0.2392156869, green: 0.6745098233, blue: 0.9686274529, alpha: 1) {
+            mainView.fibonacciNumbersButton.backgroundColor = #colorLiteral(red: 0.2392156869, green: 0.6745098233, blue: 0.9686274529, alpha: 1)
+            mainView.simpleNumbersButton.backgroundColor = .systemGray
             
-            switch row % 2 {
-            case 0:
-                label.backgroundColor = .systemBackground
-            default:
-                label.backgroundColor = .systemGray4
+            mainView.collectionView.setContentOffset(.zero, animated: true)
+            
+            DispatchQueue.global(qos: .userInitiated).async {
+                self.viewModel?.showFibsNumbers(withNumber: 10)
             }
-            
-            return label
-            
-        case 1:
-            let label = UILabel()
-            label.text = String(format: "%.0f", fibsNumbers[row]).description
-            label.textAlignment = .center
-            
-            switch row % 2 {
-            case 0:
-                label.backgroundColor = .systemGray4
-            default:
-                label.backgroundColor = .systemBackground
-            }
-
-            return label
-        default:
-            fatalError("Сбой при отображении ячеек")
-        }
-    }
-    
-    func pickerView(_ pickerView: UIPickerView, widthForComponent component: Int) -> CGFloat {
-        120
-    }
-    
-    func pickerView(_ pickerView: UIPickerView, rowHeightForComponent component: Int) -> CGFloat {
-        70
-    }
-}
-
-extension MainViewController: CustomPickerViewDelegate {
-    
-    func didTapped(_ picker: CustomPickerView) {
-        
-        DispatchQueue.global(qos: .userInitiated).async(flags: .barrier) {
-            guard let simpleNumber = self.simpleNumbers.last else { fatalError("Сбой при генерации простых чисел")}
-            
-            self.viewModel?.showSimpleNumbers(startNumber: simpleNumber)
-            self.viewModel?.showFibsNumbers(number: Double(self.fibsNumbers.count))
         }
     }
 }
