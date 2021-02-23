@@ -9,46 +9,40 @@ import UIKit
 
 protocol MainViewModelProtocol: AnyObject {
     
-    var simpleNumbers: [Int]? { get }
-    var fibsNumbers: [Double]? { get }
+    var allNumbers: [Double]? { get }
     
-    var getSimpleNumbers: ((MainViewModelProtocol) -> Void)? { get set }
-    var getFibsNumbers: ((MainViewModelProtocol) -> Void)? { get set }
+    var getAllNumbers: ((MainViewModelProtocol) -> Void)? { get set }
     
-    func showSimpleNumbers(startNumber: Int)
-    func showFibsNumbers(number: Double)
+    func showSimpleNumbers(withNumber: Int)
+    func showFibsNumbers(withNumber: Int)
     
-    init(generator: Generator)
+    
+    init(simpleGenerator: NumbersGenerator, fibsGenerator: NumbersGenerator)
 }
 
 class MainViewModel: MainViewModelProtocol {
     
-    let generator: Generator
+    let simpleNumbersModel: NumbersGenerator
+    let fibsNumbersModel: NumbersGenerator
     
-    var simpleNumbers: [Int]? {
+    var allNumbers: [Double]? {
         didSet {
-            self.getSimpleNumbers?(self)
+            self.getAllNumbers?(self)
         }
     }
     
-    var fibsNumbers: [Double]? {
-        didSet {
-            self.getFibsNumbers?(self)
-        }
+    var getAllNumbers: ((MainViewModelProtocol) -> Void)?
+    
+    func showSimpleNumbers(withNumber: Int) {
+        self.allNumbers = simpleNumbersModel.generateNumbers(withNumber: withNumber)
     }
     
-    var getSimpleNumbers: ((MainViewModelProtocol) -> Void)?
-    var getFibsNumbers: ((MainViewModelProtocol) -> Void)?
-    
-    func showSimpleNumbers(startNumber: Int) {
-        self.simpleNumbers = self.generator.generateSimpleNumbers(toMax: startNumber)
+    func showFibsNumbers(withNumber: Int) {
+        self.allNumbers = fibsNumbersModel.generateNumbers(withNumber: withNumber)
     }
-    
-    func showFibsNumbers(number: Double) {
-        self.fibsNumbers = self.generator.generateFibsNumbers(number: Int(number))
-    }
-    
-    required init(generator: Generator) {
-        self.generator = generator
+
+    required init(simpleGenerator: NumbersGenerator, fibsGenerator: NumbersGenerator) {
+        self.simpleNumbersModel = simpleGenerator
+        self.fibsNumbersModel = fibsGenerator
     }
 }

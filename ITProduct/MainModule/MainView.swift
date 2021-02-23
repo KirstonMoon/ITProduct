@@ -57,7 +57,7 @@ class MainView: UIView {
         
         collectionView = UICollectionView(frame: frame, collectionViewLayout: layout)
         collectionView.register(CustomCollectionViewCell.self, forCellWithReuseIdentifier: CustomCollectionViewCell.cellId)
-        //collectionView.showsVerticalScrollIndicator = false
+        collectionView.showsVerticalScrollIndicator = false
         collectionView.backgroundColor = .systemBackground
         addSubview(collectionView)
         
