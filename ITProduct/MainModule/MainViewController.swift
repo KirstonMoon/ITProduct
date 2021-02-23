@@ -90,7 +90,7 @@ extension MainViewController: UICollectionViewDelegate, UICollectionViewDataSour
         if mainView.simpleNumbersButton.backgroundColor == #colorLiteral(red: 0.2392156869, green: 0.6745098233, blue: 0.9686274529, alpha: 1) {
             cell.numberLabel.text = simpleNumbers[indexPath.row].description
         } else if mainView.fibonacciNumbersButton.backgroundColor == #colorLiteral(red: 0.2392156869, green: 0.6745098233, blue: 0.9686274529, alpha: 1) {
-            cell.numberLabel.text = fibsNumbers[indexPath.row].description
+            cell.numberLabel.text = String(format: "%.0f", fibsNumbers[indexPath.row]).description
         }
         
         if indexPath.row % 4 == 0 || indexPath.row % 4 == 3 {
@@ -104,10 +104,17 @@ extension MainViewController: UICollectionViewDelegate, UICollectionViewDataSour
     func collectionView(_ collectionView: UICollectionView, willDisplay cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {
         
         if indexPath.row == simpleNumbers.count - 30 {
-            
-            DispatchQueue.global(qos: .userInitiated).async {
-                guard let lastSimpleNumber = self.simpleNumbers.last else { return }
-                self.viewModel?.showSimpleNumbers(startNumber: lastSimpleNumber)
+            if mainView.simpleNumbersButton.backgroundColor == #colorLiteral(red: 0.2392156869, green: 0.6745098233, blue: 0.9686274529, alpha: 1) {
+                DispatchQueue.global(qos: .userInitiated).async {
+                    guard let lastSimpleNumber = self.simpleNumbers.last else { return }
+                    self.viewModel?.showSimpleNumbers(startNumber: lastSimpleNumber)
+                }
+            }
+        } else if indexPath.row == fibsNumbers.count - 30 {
+            if mainView.fibonacciNumbersButton.backgroundColor == #colorLiteral(red: 0.2392156869, green: 0.6745098233, blue: 0.9686274529, alpha: 1) {
+                DispatchQueue.global(qos: .userInitiated).async {
+                    self.viewModel?.showFibsNumbers(number: Double(self.fibsNumbers.count))
+                }
             }
         }
     }
@@ -122,6 +129,11 @@ extension MainViewController {
         if mainView.simpleNumbersButton.backgroundColor != #colorLiteral(red: 0.2392156869, green: 0.6745098233, blue: 0.9686274529, alpha: 1) {
             mainView.simpleNumbersButton.backgroundColor = #colorLiteral(red: 0.2392156869, green: 0.6745098233, blue: 0.9686274529, alpha: 1)
             mainView.fibonacciNumbersButton.backgroundColor = .gray
+            
+            let updatedNumbers = simpleNumbers.prefix(50).map{$0}
+            simpleNumbers = updatedNumbers
+            
+            mainView.collectionView.setContentOffset(CGPoint.zero, animated: true)
             mainView.collectionView.reloadData()
         }
     }
@@ -130,6 +142,11 @@ extension MainViewController {
         if mainView.fibonacciNumbersButton.backgroundColor != #colorLiteral(red: 0.2392156869, green: 0.6745098233, blue: 0.9686274529, alpha: 1) {
             mainView.fibonacciNumbersButton.backgroundColor = #colorLiteral(red: 0.2392156869, green: 0.6745098233, blue: 0.9686274529, alpha: 1)
             mainView.simpleNumbersButton.backgroundColor = .gray
+            
+            let updatedNumbers = fibsNumbers.prefix(100).map{ $0 }
+            fibsNumbers = updatedNumbers
+            
+            mainView.collectionView.setContentOffset(CGPoint.zero, animated: true)
             mainView.collectionView.reloadData()
         }
     }
