@@ -96,7 +96,8 @@ extension MainViewController: UICollectionViewDelegate, UICollectionViewDataSour
         if indexPath.row == simpleNumbers.count - 30 {
             
             DispatchQueue.global(qos: .userInitiated).async {
-                self.viewModel?.showSimpleNumbers(startNumber: self.simpleNumbers.last!)
+                guard let lastSimpleNumber = self.simpleNumbers.last else { return }
+                self.viewModel?.showSimpleNumbers(startNumber: lastSimpleNumber)
             }
         }
     }
@@ -109,10 +110,17 @@ extension MainViewController: UICollectionViewDelegate, UICollectionViewDataSour
 extension MainViewController {
     
     @objc func switchToSimpleNumbes(sender: UIButton) {
-        print("das")
+        
+        if mainView.simpleNumbersButton.backgroundColor != #colorLiteral(red: 0.2392156869, green: 0.6745098233, blue: 0.9686274529, alpha: 1) {
+            mainView.simpleNumbersButton.backgroundColor = #colorLiteral(red: 0.2392156869, green: 0.6745098233, blue: 0.9686274529, alpha: 1)
+            mainView.fibonacciNumbersButton.backgroundColor = .gray
+        }
     }
     
     @objc func switchToFibsNumbes(sender: UIButton) {
-        print("dasd")
+        if mainView.fibonacciNumbersButton.backgroundColor != #colorLiteral(red: 0.2392156869, green: 0.6745098233, blue: 0.9686274529, alpha: 1) {
+            mainView.fibonacciNumbersButton.backgroundColor = #colorLiteral(red: 0.2392156869, green: 0.6745098233, blue: 0.9686274529, alpha: 1)
+            mainView.simpleNumbersButton.backgroundColor = .gray
+        }
     }
 }
