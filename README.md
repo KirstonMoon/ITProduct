@@ -13,4 +13,4 @@
 Остальное по вкусу. Переключение списка «простые/фибоначчи» можно
 сделать как угодно, картинка просто как пример.
 
-![Альтернативный текст](https://lh5.googleusercontent.com/vLtqt3HsN8QqvcrpSDgWf3HWAH7dZG655xRN2OcaMWum-5p1EBkC4jrRuz-EeGzXsfpI-ChCK5mSX6X50SMqAzYwCxOVkXEap40R2--ZBmXqBB4h32XqSEWSNMkFaOZinQOCiWOX)
+![https://lh5.googleusercontent.com/vLtqt3HsN8QqvcrpSDgWf3HWAH7dZG655xRN2OcaMWum-5p1EBkC4jrRuz-EeGzXsfpI-ChCK5mSX6X50SMqAzYwCxOVkXEap40R2--ZBmXqBB4h32XqSEWSNMkFaOZinQOCiWOX](https://lh5.googleusercontent.com/vLtqt3HsN8QqvcrpSDgWf3HWAH7dZG655xRN2OcaMWum-5p1EBkC4jrRuz-EeGzXsfpI-ChCK5mSX6X50SMqAzYwCxOVkXEap40R2--ZBmXqBB4h32XqSEWSNMkFaOZinQOCiWOX)
