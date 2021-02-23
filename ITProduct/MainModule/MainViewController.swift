@@ -89,6 +89,7 @@ extension MainViewController: UICollectionViewDelegate, UICollectionViewDataSour
         
         if mainView.simpleNumbersButton.backgroundColor == #colorLiteral(red: 0.2392156869, green: 0.6745098233, blue: 0.9686274529, alpha: 1) {
             cell.numberLabel.text = simpleNumbers[indexPath.row].description
+            
         } else if mainView.fibonacciNumbersButton.backgroundColor == #colorLiteral(red: 0.2392156869, green: 0.6745098233, blue: 0.9686274529, alpha: 1) {
             cell.numberLabel.text = String(format: "%.0f", fibsNumbers[indexPath.row]).description
         }
@@ -105,6 +106,7 @@ extension MainViewController: UICollectionViewDelegate, UICollectionViewDataSour
         
         if indexPath.row == simpleNumbers.count - 30 {
             if mainView.simpleNumbersButton.backgroundColor == #colorLiteral(red: 0.2392156869, green: 0.6745098233, blue: 0.9686274529, alpha: 1) {
+                
                 DispatchQueue.global(qos: .userInitiated).async {
                     guard let lastSimpleNumber = self.simpleNumbers.last else { return }
                     self.viewModel?.showSimpleNumbers(startNumber: lastSimpleNumber)
@@ -112,6 +114,7 @@ extension MainViewController: UICollectionViewDelegate, UICollectionViewDataSour
             }
         } else if indexPath.row == fibsNumbers.count - 30 {
             if mainView.fibonacciNumbersButton.backgroundColor == #colorLiteral(red: 0.2392156869, green: 0.6745098233, blue: 0.9686274529, alpha: 1) {
+                
                 DispatchQueue.global(qos: .userInitiated).async {
                     self.viewModel?.showFibsNumbers(number: Double(self.fibsNumbers.count))
                 }
@@ -127,6 +130,7 @@ extension MainViewController {
     @objc func switchToSimpleNumbes(sender: UIButton) {
         
         if mainView.simpleNumbersButton.backgroundColor != #colorLiteral(red: 0.2392156869, green: 0.6745098233, blue: 0.9686274529, alpha: 1) {
+            
             mainView.simpleNumbersButton.backgroundColor = #colorLiteral(red: 0.2392156869, green: 0.6745098233, blue: 0.9686274529, alpha: 1)
             mainView.fibonacciNumbersButton.backgroundColor = .gray
             
@@ -134,12 +138,16 @@ extension MainViewController {
             simpleNumbers = updatedNumbers
             
             mainView.collectionView.setContentOffset(CGPoint.zero, animated: true)
-            mainView.collectionView.reloadData()
+            
+            DispatchQueue.main.async {
+                self.mainView.collectionView.reloadData()
+            }
         }
     }
     
     @objc func switchToFibsNumbes(sender: UIButton) {
         if mainView.fibonacciNumbersButton.backgroundColor != #colorLiteral(red: 0.2392156869, green: 0.6745098233, blue: 0.9686274529, alpha: 1) {
+            
             mainView.fibonacciNumbersButton.backgroundColor = #colorLiteral(red: 0.2392156869, green: 0.6745098233, blue: 0.9686274529, alpha: 1)
             mainView.simpleNumbersButton.backgroundColor = .gray
             
@@ -147,7 +155,10 @@ extension MainViewController {
             fibsNumbers = updatedNumbers
             
             mainView.collectionView.setContentOffset(CGPoint.zero, animated: true)
-            mainView.collectionView.reloadData()
+            
+            DispatchQueue.main.async {
+                self.mainView.collectionView.reloadData()
+            }
         }
     }
 }
