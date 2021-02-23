@@ -76,17 +76,27 @@ class MainViewController: UIViewController {
 extension MainViewController: UICollectionViewDelegate, UICollectionViewDataSource {
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        simpleNumbers.count
+        if mainView.simpleNumbersButton.backgroundColor == #colorLiteral(red: 0.2392156869, green: 0.6745098233, blue: 0.9686274529, alpha: 1) {
+            return simpleNumbers.count
+        } else if mainView.fibonacciNumbersButton.backgroundColor == #colorLiteral(red: 0.2392156869, green: 0.6745098233, blue: 0.9686274529, alpha: 1) {
+            return fibsNumbers.count
+        }
+        fatalError("Сбой при высчитывании количества элементов в массиве чисел")
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         guard let cell = mainView.collectionView.dequeueReusableCell(withReuseIdentifier: CustomCollectionViewCell.cellId, for: indexPath) as? CustomCollectionViewCell else { fatalError("Не удалось создать ячейку") }
-        cell.numberLabel.text = simpleNumbers[indexPath.row].description
+        
+        if mainView.simpleNumbersButton.backgroundColor == #colorLiteral(red: 0.2392156869, green: 0.6745098233, blue: 0.9686274529, alpha: 1) {
+            cell.numberLabel.text = simpleNumbers[indexPath.row].description
+        } else if mainView.fibonacciNumbersButton.backgroundColor == #colorLiteral(red: 0.2392156869, green: 0.6745098233, blue: 0.9686274529, alpha: 1) {
+            cell.numberLabel.text = fibsNumbers[indexPath.row].description
+        }
         
         if indexPath.row % 4 == 0 || indexPath.row % 4 == 3 {
-            cell.backgroundColor = .gray
+            cell.backgroundColor = .systemGray4
         } else {
-            cell.backgroundColor = .white
+            cell.backgroundColor = .systemGray
         }
         return cell
     }
@@ -103,9 +113,7 @@ extension MainViewController: UICollectionViewDelegate, UICollectionViewDataSour
     }
 }
 
-// MARK: - Buttons setup
-
-
+// MARK: - Buttons function
 
 extension MainViewController {
     
@@ -114,6 +122,7 @@ extension MainViewController {
         if mainView.simpleNumbersButton.backgroundColor != #colorLiteral(red: 0.2392156869, green: 0.6745098233, blue: 0.9686274529, alpha: 1) {
             mainView.simpleNumbersButton.backgroundColor = #colorLiteral(red: 0.2392156869, green: 0.6745098233, blue: 0.9686274529, alpha: 1)
             mainView.fibonacciNumbersButton.backgroundColor = .gray
+            mainView.collectionView.reloadData()
         }
     }
     
@@ -121,6 +130,7 @@ extension MainViewController {
         if mainView.fibonacciNumbersButton.backgroundColor != #colorLiteral(red: 0.2392156869, green: 0.6745098233, blue: 0.9686274529, alpha: 1) {
             mainView.fibonacciNumbersButton.backgroundColor = #colorLiteral(red: 0.2392156869, green: 0.6745098233, blue: 0.9686274529, alpha: 1)
             mainView.simpleNumbersButton.backgroundColor = .gray
+            mainView.collectionView.reloadData()
         }
     }
 }

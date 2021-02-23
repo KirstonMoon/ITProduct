@@ -63,7 +63,7 @@ class MainView: UIView {
         
         collectionView.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
-            collectionView.topAnchor.constraint(equalTo: simpleNumbersButton.bottomAnchor, constant: 20),
+            collectionView.topAnchor.constraint(equalTo: fibonacciNumbersButton.bottomAnchor, constant: 20),
             collectionView.leadingAnchor.constraint(equalTo: safeAreaLayoutGuide.leadingAnchor),
             collectionView.trailingAnchor.constraint(equalTo: safeAreaLayoutGuide.trailingAnchor),
             collectionView.bottomAnchor.constraint(equalTo: safeAreaLayoutGuide.bottomAnchor)
@@ -83,7 +83,7 @@ class MainView: UIView {
         simpleNumbersButton.layer.cornerRadius = 25
         NSLayoutConstraint.activate([
             simpleNumbersButton.topAnchor.constraint(equalTo: generatorLabel.bottomAnchor, constant: 35),
-            simpleNumbersButton.leadingAnchor.constraint(equalTo: safeAreaLayoutGuide.leadingAnchor,constant: 20),
+            simpleNumbersButton.centerXAnchor.constraint(equalTo: safeAreaLayoutGuide.centerXAnchor),
             simpleNumbersButton.heightAnchor.constraint(equalToConstant: 50),
             simpleNumbersButton.widthAnchor.constraint(equalToConstant: 175)
         ])
@@ -93,8 +93,8 @@ class MainView: UIView {
         addSubview(fibonacciNumbersButton)
         fibonacciNumbersButton.layer.cornerRadius = 25
         NSLayoutConstraint.activate([
-            fibonacciNumbersButton.topAnchor.constraint(equalTo: generatorLabel.bottomAnchor, constant: 35),
-            fibonacciNumbersButton.trailingAnchor.constraint(equalTo: safeAreaLayoutGuide.trailingAnchor,constant: -20),
+            fibonacciNumbersButton.topAnchor.constraint(equalTo: simpleNumbersButton.bottomAnchor, constant: 5),
+            fibonacciNumbersButton.centerXAnchor.constraint(equalTo: safeAreaLayoutGuide.centerXAnchor),
             fibonacciNumbersButton.heightAnchor.constraint(equalToConstant: 50),
             fibonacciNumbersButton.widthAnchor.constraint(equalToConstant: 175)
         ])
