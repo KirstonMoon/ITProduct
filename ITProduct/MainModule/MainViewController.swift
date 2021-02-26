@@ -49,11 +49,11 @@ class MainViewController: UIViewController {
     }
     
     private func loadFirstNumbers() {
-        viewModel?.showSimpleNumbers(withNumber: 100)
+        viewModel?.showPrimeNumbers(withNumber: 100)
     }
     
     private func addActionsToButtons() {
-        mainView.simpleNumbersButton.addTarget(self, action: #selector(switchToSimpleNumbes(sender:)), for: .touchUpInside)
+        mainView.primeNumbersButton.addTarget(self, action: #selector(switchToPrimeNumbes(sender:)), for: .touchUpInside)
         mainView.fibonacciNumbersButton.addTarget(self, action: #selector(switchToFibsNumbes(sender:)), for: .touchUpInside)
     }
     
@@ -83,13 +83,13 @@ extension MainViewController: UICollectionViewDelegate, UICollectionViewDataSour
     func collectionView(_ collectionView: UICollectionView, willDisplay cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {
         
         if indexPath.row == allNumbers.count - 30 {
-            if mainView.simpleNumbersButton.backgroundColor == #colorLiteral(red: 0.2392156869, green: 0.6745098233, blue: 0.9686274529, alpha: 1) {
-                DispatchQueue.global(qos: .userInitiated).async {
+            if mainView.primeNumbersButton.backgroundColor == #colorLiteral(red: 0.2392156869, green: 0.6745098233, blue: 0.9686274529, alpha: 1) {
+                DispatchQueue.global(qos: .userInitiated).async(flags: .barrier) {
                     guard let lastNumber = self.allNumbers.last else { fatalError("Ошибка в массиве всех чисел в классе MainViewController")}
-                    self.viewModel?.showSimpleNumbers(withNumber: Int(lastNumber))
+                    self.viewModel?.showPrimeNumbers(withNumber: Int(lastNumber))
                 }
             } else if mainView.fibonacciNumbersButton.backgroundColor == #colorLiteral(red: 0.2392156869, green: 0.6745098233, blue: 0.9686274529, alpha: 1) {
-                DispatchQueue.global(qos: .userInitiated).async {
+                DispatchQueue.global(qos: .userInitiated).async(flags: .barrier) {
                     self.viewModel?.showFibsNumbers(withNumber: self.allNumbers.count)
                 }
             }
@@ -101,16 +101,16 @@ extension MainViewController: UICollectionViewDelegate, UICollectionViewDataSour
 
 private extension MainViewController {
     
-    @objc func switchToSimpleNumbes(sender: UIButton) {
+    @objc func switchToPrimeNumbes(sender: UIButton) {
 
-        if mainView.simpleNumbersButton.backgroundColor != #colorLiteral(red: 0.2392156869, green: 0.6745098233, blue: 0.9686274529, alpha: 1) {
-            mainView.simpleNumbersButton.backgroundColor = #colorLiteral(red: 0.2392156869, green: 0.6745098233, blue: 0.9686274529, alpha: 1)
+        if mainView.primeNumbersButton.backgroundColor != #colorLiteral(red: 0.2392156869, green: 0.6745098233, blue: 0.9686274529, alpha: 1) {
+            mainView.primeNumbersButton.backgroundColor = #colorLiteral(red: 0.2392156869, green: 0.6745098233, blue: 0.9686274529, alpha: 1)
             mainView.fibonacciNumbersButton.backgroundColor = .systemGray
             
             mainView.collectionView.setContentOffset(.zero, animated: true)
             
             DispatchQueue.global(qos: .userInitiated).async {
-                self.viewModel?.showSimpleNumbers(withNumber: 100)
+                self.viewModel?.showPrimeNumbers(withNumber: 100)
             }
         }
     }
@@ -119,7 +119,7 @@ private extension MainViewController {
         
         if mainView.fibonacciNumbersButton.backgroundColor != #colorLiteral(red: 0.2392156869, green: 0.6745098233, blue: 0.9686274529, alpha: 1) {
             mainView.fibonacciNumbersButton.backgroundColor = #colorLiteral(red: 0.2392156869, green: 0.6745098233, blue: 0.9686274529, alpha: 1)
-            mainView.simpleNumbersButton.backgroundColor = .systemGray
+            mainView.primeNumbersButton.backgroundColor = .systemGray
             
             mainView.collectionView.setContentOffset(.zero, animated: true)
             

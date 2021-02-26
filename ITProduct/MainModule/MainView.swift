@@ -20,7 +20,7 @@ class MainView: UIView {
     private func setupAppearance() {
         backgroundColor = .systemBackground
         setupGeneratorLabel()
-        setupSimpleNumbersButton()
+        setupPrimeNumbersButton()
         setupFibonacciNumbersButton()
         setupCollectionView()
     }
@@ -34,7 +34,7 @@ class MainView: UIView {
         return label
     }()
     
-    let simpleNumbersButton: UIButton = {
+    let primeNumbersButton: UIButton = {
         let bt = UIButton()
         bt.translatesAutoresizingMaskIntoConstraints = false
         bt.backgroundColor = #colorLiteral(red: 0.2392156869, green: 0.6745098233, blue: 0.9686274529, alpha: 1)
@@ -78,14 +78,14 @@ class MainView: UIView {
         ])
     }
     
-    private func setupSimpleNumbersButton() {
-        addSubview(simpleNumbersButton)
-        simpleNumbersButton.layer.cornerRadius = 25
+    private func setupPrimeNumbersButton() {
+        addSubview(primeNumbersButton)
+        primeNumbersButton.layer.cornerRadius = 25
         NSLayoutConstraint.activate([
-            simpleNumbersButton.topAnchor.constraint(equalTo: generatorLabel.bottomAnchor, constant: 35),
-            simpleNumbersButton.centerXAnchor.constraint(equalTo: safeAreaLayoutGuide.centerXAnchor),
-            simpleNumbersButton.heightAnchor.constraint(equalToConstant: 50),
-            simpleNumbersButton.widthAnchor.constraint(equalToConstant: 175)
+            primeNumbersButton.topAnchor.constraint(equalTo: generatorLabel.bottomAnchor, constant: 35),
+            primeNumbersButton.centerXAnchor.constraint(equalTo: safeAreaLayoutGuide.centerXAnchor),
+            primeNumbersButton.heightAnchor.constraint(equalToConstant: 50),
+            primeNumbersButton.widthAnchor.constraint(equalToConstant: 175)
         ])
     }
     
@@ -93,7 +93,7 @@ class MainView: UIView {
         addSubview(fibonacciNumbersButton)
         fibonacciNumbersButton.layer.cornerRadius = 25
         NSLayoutConstraint.activate([
-            fibonacciNumbersButton.topAnchor.constraint(equalTo: simpleNumbersButton.bottomAnchor, constant: 5),
+            fibonacciNumbersButton.topAnchor.constraint(equalTo: primeNumbersButton.bottomAnchor, constant: 5),
             fibonacciNumbersButton.centerXAnchor.constraint(equalTo: safeAreaLayoutGuide.centerXAnchor),
             fibonacciNumbersButton.heightAnchor.constraint(equalToConstant: 50),
             fibonacciNumbersButton.widthAnchor.constraint(equalToConstant: 175)

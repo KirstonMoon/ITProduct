@@ -13,16 +13,16 @@ protocol MainViewModelProtocol: AnyObject {
     
     var getAllNumbers: ((MainViewModelProtocol) -> Void)? { get set }
     
-    func showSimpleNumbers(withNumber: Int)
+    func showPrimeNumbers(withNumber: Int)
     func showFibsNumbers(withNumber: Int)
     
     
-    init(simpleGenerator: NumbersGenerator, fibsGenerator: NumbersGenerator)
+    init(primeGenerator: NumbersGenerator, fibsGenerator: NumbersGenerator)
 }
 
-class MainViewModel: MainViewModelProtocol {
+final class MainViewModel: MainViewModelProtocol {
     
-    let simpleNumbersModel: NumbersGenerator
+    let primeNumbersModel: NumbersGenerator
     let fibsNumbersModel: NumbersGenerator
     
     var allNumbers: [Double]? {
@@ -33,16 +33,16 @@ class MainViewModel: MainViewModelProtocol {
     
     var getAllNumbers: ((MainViewModelProtocol) -> Void)?
     
-    func showSimpleNumbers(withNumber: Int) {
-        self.allNumbers = simpleNumbersModel.generateNumbers(withNumber: withNumber)
+    func showPrimeNumbers(withNumber: Int) {
+        self.allNumbers = primeNumbersModel.generateNumbers(withNumber: withNumber)
     }
     
     func showFibsNumbers(withNumber: Int) {
         self.allNumbers = fibsNumbersModel.generateNumbers(withNumber: withNumber)
     }
 
-    required init(simpleGenerator: NumbersGenerator, fibsGenerator: NumbersGenerator) {
-        self.simpleNumbersModel = simpleGenerator
+    required init(primeGenerator: NumbersGenerator, fibsGenerator: NumbersGenerator) {
+        self.primeNumbersModel = primeGenerator
         self.fibsNumbersModel = fibsGenerator
     }
 }
