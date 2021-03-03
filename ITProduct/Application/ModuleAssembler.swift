@@ -16,8 +16,8 @@ final class ModuleAssembler: Assembler {
     
     static func createMain() -> UIViewController {
         
-        let primeGenerator = GeneratorPrimeNumbers()
-        let fibsGenerator = GeneratorFibsNumbers()
+        let primeGenerator = PrimeNumbersGenerator()
+        let fibsGenerator = FibsNumbersGenerator()
         
         let view = MainViewController()
         let viewModel = MainViewModel(primeGenerator: primeGenerator, fibsGenerator: fibsGenerator)

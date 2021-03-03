@@ -10,20 +10,15 @@ import UIKit
 protocol MainViewModelProtocol: AnyObject {
     
     var allNumbers: [Double]? { get }
-    
     var getAllNumbers: ((MainViewModelProtocol) -> Void)? { get set }
     
     func showPrimeNumbers(withNumber: Int)
     func showFibsNumbers(withNumber: Int)
     
-    
-    init(primeGenerator: NumbersGenerator, fibsGenerator: NumbersGenerator)
+    init(primeGenerator: NumbersGeneratorProtocol, fibsGenerator: NumbersGeneratorProtocol)
 }
 
 final class MainViewModel: MainViewModelProtocol {
-    
-    let primeNumbersModel: NumbersGenerator
-    let fibsNumbersModel: NumbersGenerator
     
     var allNumbers: [Double]? {
         didSet {
@@ -33,6 +28,9 @@ final class MainViewModel: MainViewModelProtocol {
     
     var getAllNumbers: ((MainViewModelProtocol) -> Void)?
     
+    let primeNumbersModel: NumbersGeneratorProtocol
+    let fibsNumbersModel: NumbersGeneratorProtocol
+    
     func showPrimeNumbers(withNumber: Int) {
         self.allNumbers = primeNumbersModel.generateNumbers(withNumber: withNumber)
     }
@@ -41,7 +39,7 @@ final class MainViewModel: MainViewModelProtocol {
         self.allNumbers = fibsNumbersModel.generateNumbers(withNumber: withNumber)
     }
 
-    required init(primeGenerator: NumbersGenerator, fibsGenerator: NumbersGenerator) {
+    required init(primeGenerator: NumbersGeneratorProtocol, fibsGenerator: NumbersGeneratorProtocol) {
         self.primeNumbersModel = primeGenerator
         self.fibsNumbersModel = fibsGenerator
     }

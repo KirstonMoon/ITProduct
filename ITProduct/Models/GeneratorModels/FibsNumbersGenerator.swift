@@ -7,10 +7,10 @@
 
 import Foundation
 
-final class GeneratorFibsNumbers: NumbersGenerator {
+final class FibsNumbersGenerator: NumbersGeneratorProtocol {
     
     func generateNumbers(withNumber: Int) -> [Double] {
-        let toNumber = withNumber + 20
+        let toNumber = withNumber + 100
         var array: [Double] = [0, 1]
         
         while array.count < toNumber {

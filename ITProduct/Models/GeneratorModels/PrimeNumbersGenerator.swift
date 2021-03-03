@@ -7,7 +7,7 @@
 
 import Foundation
 
-final class GeneratorPrimeNumbers: NumbersGenerator {
+final class PrimeNumbersGenerator: NumbersGeneratorProtocol {
     
     func generateNumbers(withNumber: Int) -> [Double] {
         var testValue = 2
