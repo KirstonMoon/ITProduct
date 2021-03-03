@@ -13,7 +13,7 @@ class CustomCollectionViewCell: UICollectionViewCell {
         super.init(frame: frame)
         setupAppearance()
     }
-    
+
     static let cellId = "customCell"
     
     private func setupAppearance() {
@@ -25,7 +25,8 @@ class CustomCollectionViewCell: UICollectionViewCell {
         label.translatesAutoresizingMaskIntoConstraints = false
         label.textAlignment = .center
         label.numberOfLines = 1
-        label.font = .systemFont(ofSize: 20)
+        label.font = UIFont(name: "Helvetica Neue Thin", size: 38)
+        
         return label
     }()
     

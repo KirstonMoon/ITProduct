@@ -16,11 +16,11 @@ final class ModuleAssembler: Assembler {
     
     static func createMain() -> UIViewController {
         
-        let simpleGenerator = GeneratorSimpleNumbers()
-        let fibsGenerator = GeneratorFibsNumbers()
+        let primeGenerator = PrimeNumbersGenerator()
+        let fibsGenerator = FibsNumbersGenerator()
         
         let view = MainViewController()
-        let viewModel = MainViewModel(simpleGenerator: simpleGenerator, fibsGenerator: fibsGenerator)
+        let viewModel = MainViewModel(primeGenerator: primeGenerator, fibsGenerator: fibsGenerator)
         view.viewModel = viewModel
         return view
     }

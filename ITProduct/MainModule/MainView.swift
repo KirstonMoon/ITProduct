@@ -17,43 +17,27 @@ class MainView: UIView {
     
     var collectionView: UICollectionView!
     
+    let tabBar: UITabBar = {
+        let tb = UITabBar()
+        tb.translatesAutoresizingMaskIntoConstraints = false
+        tb.setItems([UITabBarItem(title: "Простые", image: UIImage(systemName: "p.square.fill"), tag: 1),
+                     UITabBarItem(title: "Фибоначчи", image: UIImage(systemName: "f.square.fill"), tag: 2)], animated: true)
+        
+        return tb
+    }()
+    
     private func setupAppearance() {
         backgroundColor = .systemBackground
-        setupGeneratorLabel()
-        setupSimpleNumbersButton()
-        setupFibonacciNumbersButton()
         setupCollectionView()
+        setupTabBar()
     }
     
-    let generatorLabel: UILabel = {
-        let label = UILabel()
-        label.translatesAutoresizingMaskIntoConstraints = false
-        label.textAlignment = .center
-        label.font = .boldSystemFont(ofSize: 30)
-        label.text = "Генератор"
-        return label
-    }()
-    
-    let simpleNumbersButton: UIButton = {
-        let bt = UIButton()
-        bt.translatesAutoresizingMaskIntoConstraints = false
-        bt.backgroundColor = #colorLiteral(red: 0.2392156869, green: 0.6745098233, blue: 0.9686274529, alpha: 1)
-        bt.setTitle("Простые числа", for: .normal)
-        return bt
-    }()
-    
-    let fibonacciNumbersButton: UIButton = {
-        let bt = UIButton()
-        bt.translatesAutoresizingMaskIntoConstraints = false
-        bt.backgroundColor = .gray
-        bt.setTitle("Числа Фибоначчи", for: .normal)
-        return bt
-    }()
-
     private func setupCollectionView() {
         let layout = UICollectionViewFlowLayout()
         layout.itemSize.height = 100
-        layout.itemSize.width = UIScreen.main.bounds.width / 2 - UIScreen.main.bounds.width * 0.1
+        layout.itemSize.width = UIScreen.main.bounds.width / 2
+        layout.minimumLineSpacing = 0
+        layout.minimumInteritemSpacing = 0
         
         collectionView = UICollectionView(frame: frame, collectionViewLayout: layout)
         collectionView.register(CustomCollectionViewCell.self, forCellWithReuseIdentifier: CustomCollectionViewCell.cellId)
@@ -63,40 +47,20 @@ class MainView: UIView {
         
         collectionView.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
-            collectionView.topAnchor.constraint(equalTo: fibonacciNumbersButton.bottomAnchor, constant: 20),
+            collectionView.topAnchor.constraint(equalTo: safeAreaLayoutGuide.topAnchor),
             collectionView.leadingAnchor.constraint(equalTo: safeAreaLayoutGuide.leadingAnchor),
             collectionView.trailingAnchor.constraint(equalTo: safeAreaLayoutGuide.trailingAnchor),
             collectionView.bottomAnchor.constraint(equalTo: safeAreaLayoutGuide.bottomAnchor)
         ])
     }
     
-    private func setupGeneratorLabel() {
-        addSubview(generatorLabel)
+    private func setupTabBar() {
+        addSubview(tabBar)
+        tabBar.showsLargeContentViewer = true
         NSLayoutConstraint.activate([
-            generatorLabel.topAnchor.constraint(equalTo: safeAreaLayoutGuide.topAnchor),
-            generatorLabel.centerXAnchor.constraint(equalTo: safeAreaLayoutGuide.centerXAnchor)
-        ])
-    }
-    
-    private func setupSimpleNumbersButton() {
-        addSubview(simpleNumbersButton)
-        simpleNumbersButton.layer.cornerRadius = 25
-        NSLayoutConstraint.activate([
-            simpleNumbersButton.topAnchor.constraint(equalTo: generatorLabel.bottomAnchor, constant: 35),
-            simpleNumbersButton.centerXAnchor.constraint(equalTo: safeAreaLayoutGuide.centerXAnchor),
-            simpleNumbersButton.heightAnchor.constraint(equalToConstant: 50),
-            simpleNumbersButton.widthAnchor.constraint(equalToConstant: 175)
-        ])
-    }
-    
-    private func setupFibonacciNumbersButton() {
-        addSubview(fibonacciNumbersButton)
-        fibonacciNumbersButton.layer.cornerRadius = 25
-        NSLayoutConstraint.activate([
-            fibonacciNumbersButton.topAnchor.constraint(equalTo: simpleNumbersButton.bottomAnchor, constant: 5),
-            fibonacciNumbersButton.centerXAnchor.constraint(equalTo: safeAreaLayoutGuide.centerXAnchor),
-            fibonacciNumbersButton.heightAnchor.constraint(equalToConstant: 50),
-            fibonacciNumbersButton.widthAnchor.constraint(equalToConstant: 175)
+            tabBar.bottomAnchor.constraint(equalTo: safeAreaLayoutGuide.bottomAnchor),
+            tabBar.leadingAnchor.constraint(equalTo: safeAreaLayoutGuide.leadingAnchor),
+            tabBar.trailingAnchor.constraint(equalTo: safeAreaLayoutGuide.trailingAnchor)
         ])
     }
     
