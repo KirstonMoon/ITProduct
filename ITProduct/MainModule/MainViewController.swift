@@ -30,7 +30,7 @@ class MainViewController: UIViewController {
     {
         didSet {
             self.viewModel?.getAllNumbers = { [weak self] viewModel in
-                guard let recievedNumbers = viewModel.allNumbers else { fatalError("Ошибка в получении чисел из viewModel")}
+                guard let recievedNumbers = viewModel.allNumbers else { return }
                 self?.allNumbers = recievedNumbers
             }
         }
@@ -38,25 +38,25 @@ class MainViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        setupAppearance()
         setupDelegatesAndDataSource()
         loadFirstNumbers()
-        addActionsToButtons()
+    }
+    
+    private func setupAppearance() {
+        title = "Генератор чисел"
+        mainView.tabBar.selectedItem = mainView.tabBar.items?.first
     }
     
     private func setupDelegatesAndDataSource() {
         mainView.collectionView.delegate = self
         mainView.collectionView.dataSource = self
+        mainView.tabBar.delegate = self
     }
     
     private func loadFirstNumbers() {
-        viewModel?.showSimpleNumbers(withNumber: 100)
+        viewModel?.showPrimeNumbers(withNumber: 150)
     }
-    
-    private func addActionsToButtons() {
-        mainView.simpleNumbersButton.addTarget(self, action: #selector(switchToSimpleNumbes(sender:)), for: .touchUpInside)
-        mainView.fibonacciNumbersButton.addTarget(self, action: #selector(switchToFibsNumbes(sender:)), for: .touchUpInside)
-    }
-    
 }
 
 extension MainViewController: UICollectionViewDelegate, UICollectionViewDataSource {
@@ -72,9 +72,9 @@ extension MainViewController: UICollectionViewDelegate, UICollectionViewDataSour
         cell.numberLabel.text = String(format: "%.0f", allNumbers[indexPath.row]).description
         
         if indexPath.row % 4 == 0 || indexPath.row % 4 == 3 {
-            cell.backgroundColor = .systemGray4
+            cell.backgroundColor = .systemBackground
         } else {
-            cell.backgroundColor = .systemGray
+            cell.backgroundColor = .systemGray5
         }
         
         return cell
@@ -83,49 +83,40 @@ extension MainViewController: UICollectionViewDelegate, UICollectionViewDataSour
     func collectionView(_ collectionView: UICollectionView, willDisplay cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {
         
         if indexPath.row == allNumbers.count - 30 {
-            if mainView.simpleNumbersButton.backgroundColor == #colorLiteral(red: 0.2392156869, green: 0.6745098233, blue: 0.9686274529, alpha: 1) {
-                DispatchQueue.global(qos: .userInitiated).async {
-                    guard let lastNumber = self.allNumbers.last else { fatalError("Ошибка в массиве всех чисел в классе MainViewController")}
-                    self.viewModel?.showSimpleNumbers(withNumber: Int(lastNumber))
+
+            switch mainView.tabBar.selectedItem?.tag {
+            case 1: // Если выбраны Простые числа
+                DispatchQueue.global(qos: .userInitiated).async(flags: .barrier) {
+                    guard let lastNumber = self.allNumbers.last else { return }
+                    self.viewModel?.showPrimeNumbers(withNumber: Int(lastNumber))
                 }
-            } else if mainView.fibonacciNumbersButton.backgroundColor == #colorLiteral(red: 0.2392156869, green: 0.6745098233, blue: 0.9686274529, alpha: 1) {
-                DispatchQueue.global(qos: .userInitiated).async {
+            case 2: // Если выбраны числа Фибоначчи
+                DispatchQueue.global(qos: .userInitiated).async(flags: .barrier) {
                     self.viewModel?.showFibsNumbers(withNumber: self.allNumbers.count)
                 }
+            default:
+                break
             }
         }
     }
 }
 
-// MARK: - Buttons function
-
-private extension MainViewController {
-    
-    @objc func switchToSimpleNumbes(sender: UIButton) {
-
-        if mainView.simpleNumbersButton.backgroundColor != #colorLiteral(red: 0.2392156869, green: 0.6745098233, blue: 0.9686274529, alpha: 1) {
-            mainView.simpleNumbersButton.backgroundColor = #colorLiteral(red: 0.2392156869, green: 0.6745098233, blue: 0.9686274529, alpha: 1)
-            mainView.fibonacciNumbersButton.backgroundColor = .systemGray
-            
-            mainView.collectionView.setContentOffset(.zero, animated: true)
-            
-            DispatchQueue.global(qos: .userInitiated).async {
-                self.viewModel?.showSimpleNumbers(withNumber: 100)
-            }
-        }
-    }
-    
-    @objc func switchToFibsNumbes(sender: UIButton) {
+extension MainViewController: UITabBarDelegate {
+    func tabBar(_ tabBar: UITabBar, didSelect item: UITabBarItem) {
         
-        if mainView.fibonacciNumbersButton.backgroundColor != #colorLiteral(red: 0.2392156869, green: 0.6745098233, blue: 0.9686274529, alpha: 1) {
-            mainView.fibonacciNumbersButton.backgroundColor = #colorLiteral(red: 0.2392156869, green: 0.6745098233, blue: 0.9686274529, alpha: 1)
-            mainView.simpleNumbersButton.backgroundColor = .systemGray
-            
+        switch item.tag {
+        case 1: // Если выбраны Простые числа
             mainView.collectionView.setContentOffset(.zero, animated: true)
-            
             DispatchQueue.global(qos: .userInitiated).async {
-                self.viewModel?.showFibsNumbers(withNumber: 10)
-            }
+                self.viewModel?.showPrimeNumbers(withNumber: 150)}
+        case 2: // Если выбраны числа Фибоначчи
+            mainView.collectionView.setContentOffset(.zero, animated: true)
+            DispatchQueue.global(qos: .userInitiated).async {
+                self.viewModel?.showFibsNumbers(withNumber: 10)}
+        default:
+            break
         }
     }
 }
+
+
